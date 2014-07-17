@@ -59,7 +59,8 @@
 
 - (CCScene*) startScene
 {
-    return [CCBReader loadAsScene:@"MainScene"];
+    //TODO: Return Gameplay here to MainScreen/figure out play button
+    return [CCBReader loadAsScene:@"Gameplay"];
 }
 
 @end
