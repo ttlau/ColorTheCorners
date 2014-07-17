@@ -35,7 +35,7 @@
             BlueprintIdentifier = "B77F1B2D17B978D7009739AE"
             BuildableName = "Placeholder.app"
             BlueprintName = "Placeholder"
-            ReferencedContainer = "container:Placeholder.xcodeproj">
+            ReferencedContainer = "container:Path.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -54,7 +54,7 @@
             BlueprintIdentifier = "B77F1B2D17B978D7009739AE"
             BuildableName = "Placeholder.app"
             BlueprintName = "Placeholder"
-            ReferencedContainer = "container:Placeholder.xcodeproj">
+            ReferencedContainer = "container:Path.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
