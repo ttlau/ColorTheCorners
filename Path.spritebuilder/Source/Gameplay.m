@@ -15,6 +15,7 @@
     CCNode *_contentNode;
     CCLabelTTF *_scoreLabel;
     Vertex *_currentVertex;
+    NSMutableArray *_listOfVertices;
     
     int points;
 }
@@ -31,6 +32,14 @@ CGPoint endPoint;
     CCScene *level = [CCBReader loadAsScene:@"Levels/Level1"];
     [_levelNode addChild:level];
     
+    CCNode *_levelNodeChild = [_levelNode.children objectAtIndex:0];
+    
+    for (CCSprite *s in _levelNodeChild.children){ //find a way to enumerate through levelNode's children and add to array
+        CGRect absoluteBox = CGRectMake(s.position.x, s.position.y, [s boundingBox].size.width, [s boundingBox].size.height);
+        [_listOfVertices addObject: [NSValue valueWithCGRect: absoluteBox]];
+        NSLog (@"added a vertex");
+    }
+    
     //set the score to 0
     points = 0;
 }
@@ -38,7 +47,19 @@ CGPoint endPoint;
 -(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
     // set the beginning of the line
-    startPoint = [touch locationInNode:_contentNode];
+    CGPoint temp = [touch locationInNode:_contentNode];
+    CGRect v;
+    for (int i = 0; i < _listOfVertices.count; i++)
+    {
+        v = [[_listOfVertices objectAtIndex:i] CGRectValue];
+        if (CGRectContainsPoint(v, temp))
+        {
+            // startPoint = temp;
+            NSLog (@"Vertex Touched");
+            return;
+        }
+    }
+    
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
