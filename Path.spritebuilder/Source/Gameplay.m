@@ -32,12 +32,14 @@ CGPoint endPoint;
     CCScene *level = [CCBReader loadAsScene:@"Levels/Level1"];
     [_levelNode addChild:level];
     
-    CCNode *_levelNodeChild = [_levelNode.children objectAtIndex:0];
+    // add bounding boxes for interaction around all nodes
+    CCScene *_levelNodeChild = [_levelNode.children objectAtIndex:0];
+    CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
     
-    for (CCSprite *s in _levelNodeChild.children){ //find a way to enumerate through levelNode's children and add to array
+    for (CCSprite *s in _listOfSprites.children){
         CGRect absoluteBox = CGRectMake(s.position.x, s.position.y, [s boundingBox].size.width, [s boundingBox].size.height);
         [_listOfVertices addObject: [NSValue valueWithCGRect: absoluteBox]];
-        NSLog (@"added a vertex");
+        
     }
     
     //set the score to 0
@@ -76,11 +78,11 @@ CGPoint endPoint;
     _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     _scoreLabel.visible = true;
     
-    // draw the line with the given start and finish
-    CCColor *c = [CCColor colorWithRed:1.0 green:0.286 blue:0.0];
-    CCDrawNode *line = [CCDrawNode node];
-    [line drawSegmentFrom:startPoint to:endPoint radius:5.0 color:c];
-    [self addChild: line];
+//    // draw the line with the given start and finish
+//    CCColor *c = [CCColor colorWithRed:1.0 green:0.286 blue:0.0];
+//    CCDrawNode *line = [CCDrawNode node];
+//    [line drawSegmentFrom:startPoint to:endPoint radius:5.0 color:c];
+//    [self addChild: line];
     
 }
 
