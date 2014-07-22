@@ -35,12 +35,19 @@ CGPoint endPoint;
     // add bounding boxes for interaction around all nodes
     CCScene *_levelNodeChild = [_levelNode.children objectAtIndex:0];
     CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
+    _listOfVertices = [[NSMutableArray alloc] init];
     
     for (CCSprite *s in _listOfSprites.children){
         CGRect absoluteBox = CGRectMake(s.position.x, s.position.y, [s boundingBox].size.width, [s boundingBox].size.height);
         [_listOfVertices addObject: [NSValue valueWithCGRect: absoluteBox]];
         
+//        
+//        // testing purposes
+//        UIView *_currentView = [[UIView init] initWithFrame: absoluteBox];
+//        [_currentView drawRect:absoluteBox];
+        
     }
+    
     
     //set the score to 0
     points = 0;
