@@ -63,8 +63,13 @@
     CCScene *_levelNodeChild = [_levelNode.children objectAtIndex:0];
     CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
     
+    //set tags
+    //int tagNumber = 0;
+    
     for (Vertex *s in _listOfSprites.children){
         [_listOfVertices addObject: s];
+        //s.tag = tagNumber;
+        //tagNumber++;
         CGPoint vertexLoc = [_contentNode convertToWorldSpace:s.position];
         CCLOG(@"Vertex position x: %f y: %f",vertexLoc.x, vertexLoc.y);
     }
@@ -127,6 +132,7 @@
             
             // destroy the dynamically drawn line
             [_dynamic clear];
+            //[_static drawPolyWithVerts: v.position count:0 fillColor:[CCColor clearColor] borderWidth:3 borderColor:[CCColor magentaColor]];
             [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
             CCLOG(@"Touched a Vertex!");
             [_touchedVertices addObject:v];
