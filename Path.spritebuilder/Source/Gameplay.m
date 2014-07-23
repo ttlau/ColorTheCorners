@@ -65,6 +65,8 @@
     
     for (Vertex *s in _listOfSprites.children){
         [_listOfVertices addObject: s];
+        CGPoint vertexLoc = [_contentNode convertToWorldSpace:s.position];
+        CCLOG(@"Vertex position x: %f y: %f",vertexLoc.x, vertexLoc.y);
     }
 }
 
@@ -88,11 +90,12 @@
     
     for (Vertex *v in _listOfVertices)
     {
-        double distanceToVertex = [self distanceBetweenPoint:v.position andPoint:touchLoc];
-        CCLOG(@"Distance: %f", distanceToVertex);
+        double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
+        CCLOG(@"Touch point: x: %f y: %f", touchLoc.x, touchLoc.y);
+        //CCLOG(@"Distance: %f", distanceToVertex);
         
         if ( distanceToVertex < 15 && [_touchedVertices count] == 0){
-            [_dynamic drawDot:v.position radius:15 color:[CCColor magentaColor]];
+            [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
             CCLOG(@"Touched a Vertex!");
             [_touchedVertices addObject:v];
 
@@ -116,15 +119,20 @@
     
     for (Vertex *v in _listOfVertices)
     {
-        double distanceToVertex = [self distanceBetweenPoint:v.position andPoint:touchLoc];
+        double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
         CCLOG(@"Distance: %f", distanceToVertex);
         
         // if connected two vertices
         if ( distanceToVertex < 15 && ![_touchedVertices containsObject:v]){
             
+            // destroy the dynamically drawn line
+            [_dynamic clear];
             [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
             CCLOG(@"Touched a Vertex!");
             [_touchedVertices addObject:v];
+            
+            // points added for connected nodes
+            points++;
             
             //draw the final segment, the start of it being from the first touched star to the second touched star
             [_static drawSegmentFrom:((Vertex*)[_touchedVertices objectAtIndex:[_touchedVertices count] - 2]).position to:((Vertex*)[_touchedVertices objectAtIndex:[_touchedVertices count] - 1]).position radius:5.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
@@ -136,9 +144,10 @@
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
     //update the score
-    points++;
     _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     _scoreLabel.visible = true;
+    
+    [_dynamic clear];
     
 //    // draw the line with the given start and finish
 //    CCColor *c = [CCColor colorWithRed:1.0 green:0.286 blue:0.0];
