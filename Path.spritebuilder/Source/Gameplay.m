@@ -88,7 +88,7 @@
     
     for (Vertex *v in _listOfVertices)
     {
-        double distanceToVertex = [_contentNode distanceBetweenPoint:v.position andPoint:touchLoc];
+        double distanceToVertex = [self distanceBetweenPoint:v.position andPoint:touchLoc];
         CCLOG(@"Distance: %f", distanceToVertex);
         
         if ( distanceToVertex < 15 && [_touchedVertices count] == 0){
@@ -116,7 +116,7 @@
     
     for (Vertex *v in _listOfVertices)
     {
-        double distanceToVertex = [_contentNode distanceBetweenPoint:v.position andPoint:touchLoc];
+        double distanceToVertex = [self distanceBetweenPoint:v.position andPoint:touchLoc];
         CCLOG(@"Distance: %f", distanceToVertex);
         
         // if connected two vertices
@@ -153,5 +153,13 @@
     [[CCDirector sharedDirector] replaceScene: [CCBReader loadAsScene:@"Gameplay"]];
 }
 
+// distance formula for use in drawing lines
+-(double)distanceBetweenPoint: (CGPoint) point1 andPoint: (CGPoint) point2
+{
+    double dx = (point2.x-point1.x);
+    double dy = (point2.y-point1.y);
+    double dist = dx*dx + dy*dy;
+    return sqrt(dist);
+}
 
 @end
