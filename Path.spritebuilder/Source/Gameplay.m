@@ -52,7 +52,9 @@
 - (void)didLoadFromCCB {
     
     // load the level
-    CCScene *level = [CCBReader loadAsScene:@"Levels/Level1"];
+    CCNode *level = [CCBReader load:@"Levels/Level1"];
+//    _levelNode.positionInPoints = ccp(0,0);
+//    level.positionInPoints = ccp(0,0);
     [_levelNode addChild:level];
     
     // initialize variables
@@ -62,16 +64,24 @@
     // populate list of vertices
     CCScene *_levelNodeChild = [_levelNode.children objectAtIndex:0];
     CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
+    CCNode *_extraStuff = [_listOfSprites.children objectAtIndex:0];
     
-    //set tags
-    //int tagNumber = 0;
+    // for tag numbers
+    int tagNumber = 0;
     
-    for (Vertex *s in _listOfSprites.children){
+    for (Vertex *s in _extraStuff.children){
+        
+        // set the tag
+        s.tag = tagNumber;
+        tagNumber++;
+        
+        CCLabelTTF *tagString;
+        tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:30];
+        [tagString setPosition:[_contentNode convertToWorldSpace:s.position]];
+        [s addChild:tagString];
+        
+        // add to list of vertices
         [_listOfVertices addObject: s];
-        //s.tag = tagNumber;
-        //tagNumber++;
-        CGPoint vertexLoc = [_contentNode convertToWorldSpace:s.position];
-        CCLOG(@"Vertex position x: %f y: %f",vertexLoc.x, vertexLoc.y);
     }
 }
 
@@ -96,12 +106,11 @@
     for (Vertex *v in _listOfVertices)
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
-        CCLOG(@"Touch point: x: %f y: %f", touchLoc.x, touchLoc.y);
         //CCLOG(@"Distance: %f", distanceToVertex);
         
         if ( distanceToVertex < 15 && [_touchedVertices count] == 0){
             [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
-            CCLOG(@"Touched a Vertex!");
+            CCLOG(@"Touched a Vertex! Tag: %d", v.tag);
             [_touchedVertices addObject:v];
 
         }
@@ -125,7 +134,6 @@
     for (Vertex *v in _listOfVertices)
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
-        CCLOG(@"Distance: %f", distanceToVertex);
         
         // if connected two vertices
         if ( distanceToVertex < 15 && ![_touchedVertices containsObject:v]){
