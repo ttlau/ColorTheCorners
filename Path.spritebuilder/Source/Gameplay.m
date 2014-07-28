@@ -62,14 +62,14 @@
     _touchedVertices = [[NSMutableArray alloc] init];
 
     // populate list of vertices
-    CCScene *_levelNodeChild = [_levelNode.children objectAtIndex:0];
+    CCNode *_levelNodeChild = [_levelNode.children objectAtIndex:0];
     CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
-    CCNode *_extraStuff = [_listOfSprites.children objectAtIndex:0];
+    // CCNode *_extraStuff = [_listOfSprites.children objectAtIndex:0];
     
     // for tag numbers
     int tagNumber = 0;
     
-    for (Vertex *s in _extraStuff.children){
+    for (Vertex *s in _listOfSprites.children){
         
         // set the tag
         s.tag = tagNumber;
@@ -77,12 +77,23 @@
         
         CCLabelTTF *tagString;
         tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:30];
-        [tagString setPosition:[_contentNode convertToWorldSpace:s.position]];
+        [tagString setPosition:[s anchorPointInPoints]];
         [s addChild:tagString];
+        
+        CCLOG(@"vertex position x: %f y: %f", s.position.x, s.position.y);
+//        CCLOG(@"vertex position in points x: %f, y: %f", s.positionInPoints.x, s.positionInPoints.y);
+//        CCLOG(@"vertex position in world space x: %f, y: %f", [_contentNode convertToWorldSpace:s.position].x, [_contentNode convertToWorldSpace:s.position].y);
+//        CCLOG(@"vertex position in node space x: %f, y: %f", [_contentNode convertToNodeSpace:s.position].x, [_contentNode convertToNodeSpace:s.position].y);
+//        CCLOG(@"coordinates of bounding box x: %f y: %f", [s boundingBox].origin.x, [s boundingBox].origin.y);
+//        CCLOG(@"size of bounding box height: %f width: %f", [s boundingBox].size.height, [s boundingBox].size.width);
+        
+        
+        
         
         // add to list of vertices
         [_listOfVertices addObject: s];
     }
+    CCLOG(@"number of vertices %d", tagNumber);
 }
 
 -(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
@@ -106,7 +117,7 @@
     for (Vertex *v in _listOfVertices)
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
-        //CCLOG(@"Distance: %f", distanceToVertex);
+        CCLOG(@"Distance: %f", distanceToVertex);
         
         if ( distanceToVertex < 15 && [_touchedVertices count] == 0){
             [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
