@@ -79,14 +79,22 @@
         tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:30];
         [tagString setPosition:[s anchorPointInPoints]];
         [s addChild:tagString];
+
         
-        CCLOG(@"vertex position x: %f y: %f", s.position.x, s.position.y);
-//        CCLOG(@"vertex position in points x: %f, y: %f", s.positionInPoints.x, s.positionInPoints.y);
-//        CCLOG(@"vertex position in world space x: %f, y: %f", [_contentNode convertToWorldSpace:s.position].x, [_contentNode convertToWorldSpace:s.position].y);
-//        CCLOG(@"vertex position in node space x: %f, y: %f", [_contentNode convertToNodeSpace:s.position].x, [_contentNode convertToNodeSpace:s.position].y);
-//        CCLOG(@"coordinates of bounding box x: %f y: %f", [s boundingBox].origin.x, [s boundingBox].origin.y);
-//        CCLOG(@"size of bounding box height: %f width: %f", [s boundingBox].size.height, [s boundingBox].size.width);
+        // Draw a circle
+        UIBezierPath *aPath = [UIBezierPath bezierPathWithArcCenter:[s anchorPointInPoints]
+                                                             radius:2000
+                                                            startAngle:0
+                                                           endAngle:2.0 * M_PI
+                                                          clockwise:YES];
+        aPath.lineWidth = 10.0;
+        [aPath stroke];
         
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(context, 2.0);
+        CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+        CGRect rectangle = [s boundingBox];
+        CGContextStrokeEllipseInRect(context, rectangle);
         
         
         
