@@ -12,4 +12,10 @@
 
 @implementation Vertex
 
+-(Vertex*)init{
+    self =[super init];
+    self.color = [UIColor blackColor];
+    return self;
+}
+
 @end
