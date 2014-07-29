@@ -52,7 +52,7 @@
 - (void)didLoadFromCCB {
     
     // load the level
-    CCNode *level = [CCBReader load:@"Levels/Level1"];
+    CCNode *level = [CCBReader load:@"Levels/Level2"];
 //    _levelNode.positionInPoints = ccp(0,0);
 //    level.positionInPoints = ccp(0,0);
     [_levelNode addChild:level];
@@ -79,53 +79,53 @@
         tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:30];
         [tagString setPosition:[s anchorPointInPoints]];
         [s addChild:tagString];
-
         
-        // Draw a circle
-        UIBezierPath *aPath = [UIBezierPath bezierPathWithArcCenter:[s anchorPointInPoints]
-                                                             radius:2000
-                                                            startAngle:0
-                                                           endAngle:2.0 * M_PI
-                                                          clockwise:YES];
-        aPath.lineWidth = 10.0;
-        [aPath stroke];
-        
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetLineWidth(context, 2.0);
-        CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
-        CGRect rectangle = [s boundingBox];
-        CGContextStrokeEllipseInRect(context, rectangle);
-        
-        
+        [self drawRect:s.boundingBox];
         
         // add to list of vertices
         [_listOfVertices addObject: s];
     }
-    CCLOG(@"number of vertices %d", tagNumber);
+    
+    // draw the graph
+    
+    NSArray *edges = @[@[@0, @1, @0, @1, @0], @[@1, @0, @1, @0, @1], @[@0, @1, @0, @1, @1], @[@1, @0, @1, @0, @1], @[@0, @1, @1, @1, @0]];
+    
+    
+    int index = 0;
+    int secondIndex = 0;
+    
+    CCDrawNode *map;
+    map = [[CCDrawNode alloc]init];
+    map.position = (ccp(0,0));
+    [self addChild:map];
+    
+    while (index < [edges count]) //TODO: fix magic number
+    {
+        secondIndex = 0;
+        
+        // because the adjacency matrix is symmetric, no need to double draw
+        while(secondIndex < index)
+        {
+            if ([(NSNumber*)edges[index][secondIndex] isEqualToNumber:@1])
+            {
+                [map drawSegmentFrom:((Vertex*)[_listOfVertices objectAtIndex:index]).positionInPoints to:((Vertex*)[_listOfVertices objectAtIndex:secondIndex]).positionInPoints radius:2.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
+            }
+            secondIndex++;
+        }
+        index++;
+    }
+    
+    
+    
 }
 
 -(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-//    // set the beginning of the line
-//    CGPoint temp = [touch locationInNode:_contentNode];
-//    CGRect v;
-//    for (int i = 0; i < _listOfVertices.count; i++)
-//    {
-//        v = [[_listOfVertices objectAtIndex:i] CGRectValue];
-//        if (CGRectContainsPoint(v, temp))
-//        {
-//            // startPoint = temp;
-//            NSLog (@"Vertex Touched");
-//            return;
-//        }
-//    }
-    
     CGPoint touchLoc = [touch locationInNode:_contentNode];
     
     for (Vertex *v in _listOfVertices)
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
-        CCLOG(@"Distance: %f", distanceToVertex);
         
         if ( distanceToVertex < 15 && [_touchedVertices count] == 0){
             [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
@@ -202,6 +202,20 @@
     double dy = (point2.y-point1.y);
     double dist = dx*dx + dy*dy;
     return sqrt(dist);
+}
+
+- (void)drawRect:(CGRect)rect {
+    
+        CGContextRef context = UIGraphicsGetCurrentContext();
+    
+        CGContextSetLineWidth(context, 2.0);
+    
+        CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+        CGRect rectangle = CGRectMake(60,170,200,80);
+    
+        CGContextAddEllipseInRect(context, rectangle);
+    
+        CGContextStrokePath(context);
 }
 
 @end
