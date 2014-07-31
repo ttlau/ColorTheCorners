@@ -12,9 +12,11 @@
 
 @implementation Vertex
 
--(Vertex*)init{
-    self =[super init];
-    self.color = [UIColor blackColor];
+-(id)init{
+    self = [super init];
+    if (self){
+        self.color = [CCColor redColor];
+    }
     return self;
 }
 
