@@ -18,10 +18,13 @@
     Vertex *_currentVertex;
     
     NSMutableArray *_listOfVertices;
-    NSMutableArray *_touchedVertices;
+    NSMutableArray *colors;
     
     CCDrawNode *_dynamic;
     CCDrawNode *_static;
+    
+    int numOfColors;
+    CCColor *currentColor;
     
     int points;
 }
@@ -44,7 +47,9 @@
     [self addChild:_static];
     
     //set the score to 0
-    points = 0;
+    points = numOfColors - 1;
+    _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
+    
 
 }
 
@@ -59,12 +64,19 @@
     
     // initialize variables
     _listOfVertices = [[NSMutableArray alloc] init];
-    _touchedVertices = [[NSMutableArray alloc] init];
+    colors = [[NSMutableArray alloc] init];
 
-    // populate list of vertices
+#pragma mark populate list of vertices
+    
     CCNode *_levelNodeChild = [_levelNode.children objectAtIndex:0];
     CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
     // CCNode *_extraStuff = [_listOfSprites.children objectAtIndex:0];
+    
+    // create dots
+    CCDrawNode *map;
+    map = [[CCDrawNode alloc]init];
+    map.position = (ccp(0,0));
+    [self addChild:map];
     
     // for tag numbers
     int tagNumber = 0;
@@ -73,20 +85,26 @@
         
         // set the tag
         s.tag = tagNumber;
-        tagNumber++;
-        
+    
         CCLabelTTF *tagString;
         tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:30];
         [tagString setPosition:[s anchorPointInPoints]];
         [s addChild:tagString];
         
-        [self drawRect:s.boundingBox];
+        tagNumber++;
+        s.color = [CCColor blackColor];
+        s.visible = FALSE;
+        
+        //[self drawRect:s.boundingBox];
+        
+        // draw the dot
+        [map drawDot:s.position radius:7.5 color:[CCColor blackColor]];
         
         // add to list of vertices
         [_listOfVertices addObject: s];
     }
     
-    // draw the graph
+#pragma mark draw the edges
     
     NSArray *edges = @[@[@0, @1, @0, @1, @0], @[@1, @0, @1, @0, @1], @[@0, @1, @0, @1, @1], @[@1, @0, @1, @0, @1], @[@0, @1, @1, @1, @0]];
     
@@ -94,12 +112,8 @@
     int index = 0;
     int secondIndex = 0;
     
-    CCDrawNode *map;
-    map = [[CCDrawNode alloc]init];
-    map.position = (ccp(0,0));
-    [self addChild:map];
     
-    while (index < [edges count]) //TODO: fix magic number
+    while (index < [edges count])
     {
         secondIndex = 0;
         
@@ -114,7 +128,25 @@
         }
         index++;
     }
+
+#pragma draw the color options
+    NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
     
+    // one extra for black
+    numOfColors = 4;
+    for (int i = 1; i <= numOfColors; i++){
+        CCSprite *c = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelector.png"];
+        c.color = possibleColors[i-1];
+        c.position = ccp(175 + (i-1)*50, 275);
+        CGSize colorNodeSize = CGSizeMake(100.0, 100.0);
+        [c setContentSize:colorNodeSize];
+        c.visible = TRUE;
+        
+        [_levelNode addChild:c];
+        [colors addObject:c];
+    }
+    
+    currentColor = [CCColor clearColor];
     
     
 }
@@ -123,54 +155,70 @@
 {
     CGPoint touchLoc = [touch locationInNode:_contentNode];
     
+    //TODO: see if can optimize for loops
+    
+    for (CCSprite *c in colors)
+    {
+        double distanceToColor = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:c.position] andPoint: touchLoc];
+        if(distanceToColor < 15){
+            currentColor = c.color;
+            
+            // if points not 0 and not clicking black
+            if (points > 0 && !(c.color.red == 0 && c.color.blue == 0 && c.color.green == 0))
+                points--;
+            
+            //clicked black and number of colors left isn't more than max number
+            else if(points < (numOfColors-1) && (c.color.red == 0 && c.color.blue == 0 && c.color.green == 0)){
+                points++;
+            }
+            else{
+                continue;
+            }
+        }
+    }
+    
     for (Vertex *v in _listOfVertices)
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
         
-        if ( distanceToVertex < 15 && [_touchedVertices count] == 0){
-            [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
-            CCLOG(@"Touched a Vertex! Tag: %d", v.tag);
-            [_touchedVertices addObject:v];
-
+        if ( distanceToVertex < 15){
+            [_static drawDot:v.position radius:7.5 color:currentColor];
+            v.color = currentColor;
         }
     }
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    if ( [_touchedVertices count] == 0 )
-    {
-        return;
-    }
     
     CGPoint touchLoc = [touch locationInNode:_contentNode];
     
     //draws the lines
-    [_dynamic clear];
-    [_dynamic drawSegmentFrom:((Vertex*)[_touchedVertices objectAtIndex:[_touchedVertices count] - 1]).position to:touchLoc radius:5.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
-    [_dynamic drawDot:touchLoc radius:15 color:[CCColor magentaColor]];
-    
-    for (Vertex *v in _listOfVertices)
-    {
-        double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
-        
-        // if connected two vertices
-        if ( distanceToVertex < 15 && ![_touchedVertices containsObject:v]){
-            
-            // destroy the dynamically drawn line
-            [_dynamic clear];
-            //[_static drawPolyWithVerts: v.position count:0 fillColor:[CCColor clearColor] borderWidth:3 borderColor:[CCColor magentaColor]];
-            [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
-            CCLOG(@"Touched a Vertex!");
-            [_touchedVertices addObject:v];
-            
-            // points added for connected nodes
-            points++;
-            
-            //draw the final segment, the start of it being from the first touched star to the second touched star
-            [_static drawSegmentFrom:((Vertex*)[_touchedVertices objectAtIndex:[_touchedVertices count] - 2]).position to:((Vertex*)[_touchedVertices objectAtIndex:[_touchedVertices count] - 1]).position radius:5.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
-        }
-    }
+//    [_dynamic clear];
+//    [_dynamic drawSegmentFrom:((Vertex*)[colors objectAtIndex:[colors count] - 1]).position to:touchLoc radius:5.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
+//    [_dynamic drawDot:touchLoc radius:15 color:[CCColor magentaColor]];
+//    
+//    for (Vertex *v in _listOfVertices)
+//    {
+//        double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
+//        
+//        // if connected two vertices
+//        if ( distanceToVertex < 15){
+//            
+//            // destroy the dynamically drawn line
+//            [_dynamic clear];
+//            //[_static drawPolyWithVerts: v.position count:0 fillColor:[CCColor clearColor] borderWidth:3 borderColor:[CCColor magentaColor]];
+//            [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
+//            CCLOG(@"Touched a Vertex!");
+//            [colors addObject:v];
+//            
+//            // points added for connected nodes
+//            points++;
+//            
+//            //draw the final segment, the start of it being from the first touched star to the second touched star
+//            [_static drawSegmentFrom:((Vertex*)[colors objectAtIndex:[colors count] - 2]).position to:((Vertex*)[colors objectAtIndex:[colors count] - 1]).position radius:5.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
+//        }
+//    }
     
 }
 
@@ -180,14 +228,8 @@
     _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     _scoreLabel.visible = true;
     
+    
     [_dynamic clear];
-    
-//    // draw the line with the given start and finish
-//    CCColor *c = [CCColor colorWithRed:1.0 green:0.286 blue:0.0];
-//    CCDrawNode *line = [CCDrawNode node];
-//    [line drawSegmentFrom:startPoint to:endPoint radius:5.0 color:c];
-//    [self addChild: line];
-    
 }
 
 - (void)retry {

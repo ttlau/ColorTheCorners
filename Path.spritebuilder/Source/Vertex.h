@@ -11,7 +11,6 @@
 
 @interface Vertex : CCSprite
 
-@property (nonatomic, assign) UIColor* color;
 @property (nonatomic, assign) int tag;
 
 @end

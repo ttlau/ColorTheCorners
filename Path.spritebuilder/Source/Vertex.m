@@ -12,4 +12,12 @@
 
 @implementation Vertex
 
+-(id)init{
+    self = [super init];
+    if (self){
+        self.color = [CCColor redColor];
+    }
+    return self;
+}
+
 @end
