@@ -47,7 +47,9 @@
     [self addChild:_static];
     
     //set the score to 0
-    points = numOfColors;
+    points = numOfColors - 1;
+    _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
+    
 
 }
 
@@ -90,6 +92,7 @@
         [s addChild:tagString];
         
         tagNumber++;
+        s.color = [CCColor blackColor];
         s.visible = FALSE;
         
         //[self drawRect:s.boundingBox];
@@ -127,8 +130,10 @@
     }
 
 #pragma draw the color options
-    NSArray *possibleColors = @[[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
-    numOfColors = 5;
+    NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
+    
+    // one extra for black
+    numOfColors = 4;
     for (int i = 1; i <= numOfColors; i++){
         CCSprite *c = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelector.png"];
         c.color = possibleColors[i-1];
@@ -141,7 +146,7 @@
         [colors addObject:c];
     }
     
-    currentColor = [CCColor greenColor];
+    currentColor = [CCColor clearColor];
     
     
 }
@@ -155,8 +160,21 @@
     for (CCSprite *c in colors)
     {
         double distanceToColor = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:c.position] andPoint: touchLoc];
-        if(distanceToColor < 15)
+        if(distanceToColor < 15){
             currentColor = c.color;
+            
+            // if points not 0 and not clicking black
+            if (points > 0 && !(c.color.red == 0 && c.color.blue == 0 && c.color.green == 0))
+                points--;
+            
+            //clicked black and number of colors left isn't more than max number
+            else if(points < (numOfColors-1) && (c.color.red == 0 && c.color.blue == 0 && c.color.green == 0)){
+                points++;
+            }
+            else{
+                continue;
+            }
+        }
     }
     
     for (Vertex *v in _listOfVertices)
@@ -210,7 +228,6 @@
     _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     _scoreLabel.visible = true;
     
-    points--;
     
     [_dynamic clear];
 }
