@@ -61,6 +61,11 @@
     CCNode *level = [CCBReader load:@"Levels/Level2"];
     [_levelNode addChild:level];
     
+    // changing the background color
+    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed:.204 green:.596 blue:.859];
+    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: .161 green: .502 blue: .725];
+    
+    
     // initialize variables
     _listOfVertices = [[NSMutableArray alloc] init];
     colors = [[NSMutableArray alloc] init];
@@ -69,7 +74,6 @@
     
     CCNode *_levelNodeChild = [_levelNode.children objectAtIndex:0];
     CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
-    // CCNode *_extraStuff = [_listOfSprites.children objectAtIndex:0];
     
     // create dots
     CCDrawNode *map;
@@ -136,7 +140,7 @@
         index++;
     }
 
-#pragma draw the color options
+#pragma mark draw the color options
     NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
     
     // one extra for black
@@ -144,7 +148,7 @@
     for (int i = 1; i <= numOfColors; i++){
         CCSprite *c = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelector.png"];
         c.color = possibleColors[i-1];
-        c.position = ccp(175 + (i-1)*50, 275);
+        c.position = ccp(175 + (i-1)*50, 260);
         CGSize colorNodeSize = CGSizeMake(100.0, 100.0);
         [c setContentSize:colorNodeSize];
         c.visible = TRUE;
