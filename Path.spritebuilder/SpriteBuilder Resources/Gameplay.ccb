@@ -10,7 +10,7 @@
 		<false/>
 	</dict>
 	<key>UUID</key>
-	<integer>9</integer>
+	<integer>10</integer>
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
@@ -836,7 +836,7 @@
 						<string>Block</string>
 						<key>value</key>
 						<array>
-							<string>retry</string>
+							<string>clear</string>
 							<integer>1</integer>
 						</array>
 					</dict>
@@ -1102,7 +1102,7 @@
 			</dict>
 			<dict>
 				<key>UUID</key>
-				<integer>8</integer>
+				<integer>9</integer>
 				<key>baseClass</key>
 				<string>CCButton</string>
 				<key>children</key>
@@ -1112,7 +1112,7 @@
 				<key>displayName</key>
 				<string>CCButton</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>_submit</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -1132,10 +1132,10 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>284</real>
+							<real>0.5</real>
 							<real>297.60000610351562</real>
 							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1170,7 +1170,7 @@
 						<string>Block</string>
 						<key>value</key>
 						<array>
-							<string></string>
+							<string>submit</string>
 							<integer>1</integer>
 						</array>
 					</dict>

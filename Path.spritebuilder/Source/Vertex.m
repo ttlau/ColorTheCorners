@@ -17,6 +17,7 @@
     if (self){
         self.color = [CCColor redColor];
     }
+    self.isConnected = FALSE;
     return self;
 }
 

@@ -20,13 +20,16 @@
     NSMutableArray *_listOfVertices;
     NSMutableArray *colors;
     
-    CCDrawNode *_dynamic;
     CCDrawNode *_static;
     
     int numOfColors;
     CCColor *currentColor;
     
+    CCButton *_submit;
+    
     int points;
+    int numOfVertices;
+    int numVerticesUncolored;
 }
 
 -(void)onEnter{
@@ -36,20 +39,18 @@
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
     
-    //initializing dynamic draw node
-    _dynamic = [[CCDrawNode alloc]init];
-    _dynamic.position = (ccp(0,0));
-    [self addChild:_dynamic];
-    
     //initializing static draw node
     _static = [[CCDrawNode alloc]init];
     _static.position = (ccp(0,0));
     [self addChild:_static];
     
-    //set the score to 0
+    //set the points to number of colors left
     points = numOfColors - 1;
     _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     
+    //set the number of vertices uncolored to num of vertices
+    numOfVertices = [_listOfVertices count];
+    numVerticesUncolored = numOfVertices;
 
 }
 
@@ -58,8 +59,6 @@
     
     // load the level
     CCNode *level = [CCBReader load:@"Levels/Level2"];
-//    _levelNode.positionInPoints = ccp(0,0);
-//    level.positionInPoints = ccp(0,0);
     [_levelNode addChild:level];
     
     // initialize variables
@@ -83,22 +82,24 @@
     
     for (Vertex *s in _listOfSprites.children){
         
-        // set the tag
+        // set properties
         s.tag = tagNumber;
-    
-        CCLabelTTF *tagString;
-        tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:30];
-        [tagString setPosition:[s anchorPointInPoints]];
-        [s addChild:tagString];
-        
-        tagNumber++;
         s.color = [CCColor blackColor];
+        s.isConnected = FALSE;
         s.visible = FALSE;
         
         //[self drawRect:s.boundingBox];
         
         // draw the dot
         [map drawDot:s.position radius:7.5 color:[CCColor blackColor]];
+        [map setZOrder: 1];
+        
+        // demonstrate number in array
+        CCLabelTTF *tagString;
+        tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:15];
+        [tagString setPosition: s.positionInPoints];
+        [_levelNode addChild:tagString];
+        tagNumber++;
         
         // add to list of vertices
         [_listOfVertices addObject: s];
@@ -116,16 +117,22 @@
     while (index < [edges count])
     {
         secondIndex = 0;
-        
+        NSMutableArray *childrenOfVertex = [[NSMutableArray alloc] init];
         // because the adjacency matrix is symmetric, no need to double draw
         while(secondIndex < index)
         {
             if ([(NSNumber*)edges[index][secondIndex] isEqualToNumber:@1])
             {
-                [map drawSegmentFrom:((Vertex*)[_listOfVertices objectAtIndex:index]).positionInPoints to:((Vertex*)[_listOfVertices objectAtIndex:secondIndex]).positionInPoints radius:2.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
+                [map drawSegmentFrom:((Vertex*)[_listOfVertices objectAtIndex:index]).positionInPoints to:((Vertex*)[_listOfVertices objectAtIndex:secondIndex]).positionInPoints radius:2.0 color:[CCColor colorWithRed:0.925 green:0.941 blue:0.945]];
+                [map setZOrder:0];
+                
+                // second index are things that are connected to current vertex, with current vertex as origin point
+                [childrenOfVertex addObject: _listOfVertices[secondIndex]];
             }
             secondIndex++;
         }
+        // assign current vertex's linked nodes to temp array above
+        ((Vertex *)_listOfVertices[index]).linkedNodes = [[NSSet alloc] initWithArray: childrenOfVertex];
         index++;
     }
 
@@ -148,6 +155,11 @@
     
     currentColor = [CCColor clearColor];
     
+#pragma mark submit button
+    
+    // make submit button invisible
+    _submit.visible = FALSE;
+    
     
 }
 
@@ -164,15 +176,15 @@
             currentColor = c.color;
             
             // if points not 0 and not clicking black
-            if (points > 0 && !(c.color.red == 0 && c.color.blue == 0 && c.color.green == 0))
+            if (points > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]]){
                 points--;
+                break;
+            }
             
             //clicked black and number of colors left isn't more than max number
-            else if(points < (numOfColors-1) && (c.color.red == 0 && c.color.blue == 0 && c.color.green == 0)){
+            else if(points < (numOfColors-1) && [self checkColorEquality:currentColor and:[CCColor blackColor]]){
                 points++;
-            }
-            else{
-                continue;
+                break;
             }
         }
     }
@@ -181,44 +193,38 @@
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
         
-        if ( distanceToVertex < 15){
-            [_static drawDot:v.position radius:7.5 color:currentColor];
-            v.color = currentColor;
+        if (distanceToVertex < 15){
+            // if current color is clear, player has not chosen a color
+            if ([self checkColorEquality:currentColor and:[CCColor clearColor]])
+            {
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"You must select a color first!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+//                [alert show];
+                break;
+            }
+            else if (![self checkColorEquality:currentColor and: v.color]) {
+                [_static drawDot:v.position radius:7.5 color:currentColor];
+                v.color = currentColor;
+                
+                // setting how many vertices uncolored
+                
+                // if number of uncolored vertices is greater than 0 and current color is not black
+                if (numVerticesUncolored > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]]){
+                    numVerticesUncolored--;
+                    break;
+                }
+                
+                // if number of uncolored vertices is less than total number of vertices and current color is black
+                else if(numVerticesUncolored < numOfVertices && [self checkColorEquality:currentColor and:[CCColor blackColor]]){
+                    numVerticesUncolored++;
+                    break;
+                }
+            }
         }
     }
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    
-    CGPoint touchLoc = [touch locationInNode:_contentNode];
-    
-    //draws the lines
-//    [_dynamic clear];
-//    [_dynamic drawSegmentFrom:((Vertex*)[colors objectAtIndex:[colors count] - 1]).position to:touchLoc radius:5.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
-//    [_dynamic drawDot:touchLoc radius:15 color:[CCColor magentaColor]];
-//    
-//    for (Vertex *v in _listOfVertices)
-//    {
-//        double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
-//        
-//        // if connected two vertices
-//        if ( distanceToVertex < 15){
-//            
-//            // destroy the dynamically drawn line
-//            [_dynamic clear];
-//            //[_static drawPolyWithVerts: v.position count:0 fillColor:[CCColor clearColor] borderWidth:3 borderColor:[CCColor magentaColor]];
-//            [_static drawDot:v.position radius:15 color:[CCColor magentaColor]];
-//            CCLOG(@"Touched a Vertex!");
-//            [colors addObject:v];
-//            
-//            // points added for connected nodes
-//            points++;
-//            
-//            //draw the final segment, the start of it being from the first touched star to the second touched star
-//            [_static drawSegmentFrom:((Vertex*)[colors objectAtIndex:[colors count] - 2]).position to:((Vertex*)[colors objectAtIndex:[colors count] - 1]).position radius:5.0 color:[CCColor colorWithRed:1.0 green:0.286 blue:0.0]];
-//        }
-//    }
     
 }
 
@@ -228,14 +234,34 @@
     _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     _scoreLabel.visible = true;
     
-    
-    [_dynamic clear];
+    if (numVerticesUncolored == 0)
+    {
+        _submit.visible = TRUE;
+    }
+    else{
+        _submit.visible = FALSE;
+    }
 }
 
-- (void)retry {
+- (void)clear {
     // reload this level
     [[CCDirector sharedDirector] replaceScene: [CCBReader loadAsScene:@"Gameplay"]];
 }
+
+-(void)submit{
+    Boolean isValidColoring = [self bfs: [_listOfVertices lastObject]];
+    CCLabelTTF *message;
+    if (isValidColoring){
+        message = [[CCLabelTTF alloc] initWithString:@"Yay you win!" fontName: @"Helvetica" fontSize:15];
+    }
+    else{
+        message = [[CCLabelTTF alloc] initWithString:@"Aww try again" fontName: @"Helvetica" fontSize:15];
+    }
+    [message setPosition: CGPointMake(self.contentSizeInPoints.width/2, self.contentSizeInPoints.height/2)];
+    [_levelNode addChild:message];
+}
+
+#pragma mark helper functions
 
 // distance formula for use in drawing lines
 -(double)distanceBetweenPoint: (CGPoint) point1 andPoint: (CGPoint) point2
@@ -258,6 +284,50 @@
         CGContextAddEllipseInRect(context, rectangle);
     
         CGContextStrokePath(context);
+}
+
+- (Boolean)checkColorEquality : (CCColor*)colorOne and: (CCColor*)colorTwo{
+    if (colorOne.red != colorTwo.red){
+        return false;
+    }
+    if (colorOne.green != colorTwo.red){
+        return false;
+    }
+    if(colorOne.blue != colorTwo.red){
+        return false;
+    }
+    if(colorOne.alpha != colorTwo.alpha){
+        return false;
+    }
+    return true;
+}
+
+- (Boolean)bfs: (Vertex*)startingVertex{
+    
+    NSMutableSet *visitedNodes = [NSMutableSet setWithObject:startingVertex];
+    NSMutableArray *queue = [NSMutableArray arrayWithObject:startingVertex];
+    CCColor *colorToCheckAgainst;
+    
+    while ([queue count] > 0)
+    {
+        NSSet *newNodes = ((Vertex *)[queue objectAtIndex:0]).linkedNodes;
+        colorToCheckAgainst = ((Vertex *)[queue objectAtIndex:0]).color;
+        for (Vertex *newNode in newNodes)
+        {
+            if (newNode.color.red == colorToCheckAgainst.red && newNode.color.green == colorToCheckAgainst.green && newNode.color.blue == colorToCheckAgainst.blue){
+                return FALSE;
+            }
+            if (![visitedNodes containsObject:newNode])
+            {
+                [visitedNodes addObject:newNode];
+                [queue addObject:newNode];
+            }
+        }
+        
+        [queue removeObjectAtIndex:0];
+    }
+    
+    return TRUE;
 }
 
 @end
