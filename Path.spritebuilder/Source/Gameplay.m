@@ -9,6 +9,8 @@
 
 #import "Gameplay.h"
 #import "Vertex.h"
+#import"ColorSelector.h"
+
 
 @implementation Gameplay{
     
@@ -18,7 +20,7 @@
     
     
     NSMutableArray *_listOfVertices;
-    NSMutableDictionary *colors;
+    NSMutableArray *colors;
     
     CCDrawNode *_static;
     
@@ -68,7 +70,7 @@
     
     // initialize variables
     _listOfVertices = [[NSMutableArray alloc] init];
-    colors = [[NSMutableDictionary alloc] init];
+    colors = [[NSMutableArray alloc] init];
 
 #pragma mark populate list of vertices
     
@@ -142,20 +144,23 @@
 
 #pragma mark draw the color options
     NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
+    CCLayoutBox *colorBox = [[CCLayoutBox alloc]init];
+    colorBox.anchorPoint = CGPointMake(.5, .5);
+    colorBox.position = CGPointMake(self.contentSizeInPoints.width/2, self.contentSizeInPoints.height/2);
     
     // one extra for black
-    numOfColors = 10;
+    numOfColors = 4;
     for (int i = 1; i <= numOfColors; i++){
-        CCSprite *c = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelector.png"];
+        ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
         c.color = possibleColors[i-1];
         c.position = ccp(175 + (i-1)*50, 260);
         [c setScale: 0.5];
         c.visible = TRUE;
+        c.used = FALSE;
         
         // c.name wasn't here and colors addObject: c because was NSMutableArray before
-        c.name = @"uniqueName";
         [_levelNode addChild:c];
-        [colors setObject:(NSNumber*)@0 forKey:c.name];
+        [colors addObject:c];
     }
     
     currentColor = [CCColor clearColor];
@@ -174,15 +179,16 @@
     
     //TODO: see if can optimize for loops
     
-    for (CCSprite *c in colors)
+    for (ColorSelector *c in colors)
     {
         double distanceToColor = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:c.position] andPoint: touchLoc];
-        if(distanceToColor < 15){
+        if(distanceToColor < 23.5){
             currentColor = c.color;
             
-            // if points not 0 and not clicking black
-            if (points > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]]){
+            // if points not 0 and not clicking black and has not been used
+            if (points > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]] && !c.used){
                 points--;
+                c.used = TRUE;
                 break;
             }
             
@@ -198,7 +204,7 @@
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
         
-        if (distanceToVertex < 15){
+        if (distanceToVertex < 23.5){
             // if current color is clear, player has not chosen a color
             if ([self checkColorEquality:currentColor and:[CCColor clearColor]])
             {
@@ -207,22 +213,20 @@
                 break;
             }
             else if (![self checkColorEquality:currentColor and: v.color]) {
-                [_static drawDot:v.position radius:15 color:currentColor];
-                v.color = currentColor;
-                
                 // setting how many vertices uncolored
                 
-                // if number of uncolored vertices is greater than 0 and current color is not black
-                if (numVerticesUncolored > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]]){
+                // if number of uncolored vertices is greater than 0 and current color is not black and that has not been previously colored
+                if (numVerticesUncolored > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]] && [self checkColorEquality:v.color and:[CCColor blackColor]]){
                     numVerticesUncolored--;
-                    break;
                 }
                 
-                // if number of uncolored vertices is less than total number of vertices and current color is black
-                else if(numVerticesUncolored < numOfVertices && [self checkColorEquality:currentColor and:[CCColor blackColor]]){
+                // if number of uncolored vertices is less than total number of vertices and current color is black and is not already black
+                else if(numVerticesUncolored < numOfVertices && [self checkColorEquality:currentColor and:[CCColor blackColor]] && ![self checkColorEquality:v.color and:[CCColor blackColor]]){
                     numVerticesUncolored++;
-                    break;
                 }
+                
+                [_static drawDot:v.position radius:15 color:currentColor];
+                v.color = currentColor;
             }
         }
     }

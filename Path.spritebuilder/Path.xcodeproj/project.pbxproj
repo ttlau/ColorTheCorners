@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8392007918EE8E3300B6C429 /* GLKit.framework */; };
 		8F0B0880197491D5007FDD44 /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B087F197491D5007FDD44 /* Vertex.m */; };
+		8FA760EC198FF48900817947 /* ColorSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA760EB198FF48900817947 /* ColorSelector.m */; };
 		8FABDAA7197844C9008E3D3F /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FABDAA6197844C9008E3D3F /* Gameplay.m */; };
 		8FEB0479198819A400F29C30 /* Level Properties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FEB0478198819A400F29C30 /* Level Properties.plist */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
@@ -62,6 +63,8 @@
 		8392007918EE8E3300B6C429 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		8F0B087F197491D5007FDD44 /* Vertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Vertex.m; path = Source/Vertex.m; sourceTree = "<group>"; };
 		8F0B0882197491F9007FDD44 /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = Source/Vertex.h; sourceTree = "<group>"; };
+		8FA760EA198FF48900817947 /* ColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorSelector.h; path = Source/ColorSelector.h; sourceTree = "<group>"; };
+		8FA760EB198FF48900817947 /* ColorSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorSelector.m; path = Source/ColorSelector.m; sourceTree = "<group>"; };
 		8FABDAA5197844C9008E3D3F /* Gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameplay.h; path = Source/Gameplay.h; sourceTree = "<group>"; };
 		8FABDAA6197844C9008E3D3F /* Gameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameplay.m; path = Source/Gameplay.m; sourceTree = "<group>"; };
 		8FEB0478198819A400F29C30 /* Level Properties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Level Properties.plist"; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 				B7378993180767190076A88C /* MainScene.m */,
 				8FABDAA5197844C9008E3D3F /* Gameplay.h */,
 				8FABDAA6197844C9008E3D3F /* Gameplay.m */,
+				8FA760EA198FF48900817947 /* ColorSelector.h */,
+				8FA760EB198FF48900817947 /* ColorSelector.m */,
 				8FEB0478198819A400F29C30 /* Level Properties.plist */,
 			);
 			name = Source;
@@ -358,6 +363,7 @@
 				8FABDAA7197844C9008E3D3F /* Gameplay.m in Sources */,
 				8F0B0880197491D5007FDD44 /* Vertex.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
+				8FA760EC198FF48900817947 /* ColorSelector.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
