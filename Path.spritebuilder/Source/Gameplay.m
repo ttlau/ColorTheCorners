@@ -29,6 +29,8 @@
     
     CCButton *_submit;
     
+    CCLayoutBox *colorBox;
+    
     int numOfVertices;
     int numVerticesUncolored;
 }
@@ -142,7 +144,7 @@
 
 #pragma mark draw the color options
     NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
-    CCLayoutBox *colorBox = [[CCLayoutBox alloc]init];
+    colorBox = [[CCLayoutBox alloc]init];
     colorBox.anchorPoint = ccp(0.5, 0.5);
     // one extra for black
     numOfColors = 10;
@@ -186,7 +188,8 @@
     
     for (ColorSelector *c in colors)
     {
-        double distanceToColor = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:c.position] andPoint: touchLoc];
+        double distanceToColor = [self distanceBetweenPoint:[colorBox convertToWorldSpace:c.positionInPoints] andPoint: touchLoc];
+        CCLOG(@"y coordinate %f", [colorBox convertToWorldSpace:c.positionInPoints].y);
         if(distanceToColor < 23.5){
             CCLOG(@"distance to color: %f", distanceToColor);
             currentColor = c.color;
