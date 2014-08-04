@@ -147,7 +147,7 @@
     colorBox = [[CCLayoutBox alloc]init];
     colorBox.anchorPoint = ccp(0.5, 0.5);
     // one extra for black
-    numOfColors = 10;
+    numOfColors = 4;
     
     for (int i = 1; i <= numOfColors; i++){
         ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
@@ -163,12 +163,12 @@
     }
     
     colorBox.direction = CCLayoutBoxDirectionHorizontal;
-    colorBox.spacing = 20.f;
+    colorBox.spacing = 25.f;
     [colorBox layout];
     [self addChild: colorBox];
     
     CCDirector *thisDirector = [CCDirector sharedDirector];
-    colorBox.position = ccp([thisDirector viewSize].width/2.0, 260.0);
+    colorBox.position = ccp([thisDirector viewSize].width/2.0, 265.0);
     
     currentColor = [CCColor clearColor];
     
@@ -188,10 +188,11 @@
     
     for (ColorSelector *c in colors)
     {
+        // c is in node space of color Box
         double distanceToColor = [self distanceBetweenPoint:[colorBox convertToWorldSpace:c.positionInPoints] andPoint: touchLoc];
-        CCLOG(@"y coordinate %f", [colorBox convertToWorldSpace:c.positionInPoints].y);
-        if(distanceToColor < 23.5){
-            CCLOG(@"distance to color: %f", distanceToColor);
+        
+        // custom set, need to find a way to scale
+        if(distanceToColor < c.contentSize.width/2){
             currentColor = c.color;
             
             // if points not 0 and not clicking black and has not been used
@@ -211,7 +212,7 @@
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
         
-        if (distanceToVertex < 23.5){
+        if (distanceToVertex < 15){
             // if current color is clear, player has not chosen a color
             if ([self checkColorEquality:currentColor and:[CCColor clearColor]])
             {

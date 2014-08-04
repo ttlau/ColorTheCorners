@@ -203,7 +203,7 @@
 								<key>value</key>
 								<array>
 									<real>257.5</real>
-									<real>124.5</real>
+									<real>138</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -231,6 +231,8 @@
 								<string>Vertex.ccb</string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>UUID</key>
@@ -427,8 +429,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
