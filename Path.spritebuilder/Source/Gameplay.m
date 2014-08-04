@@ -4,6 +4,7 @@
 //
 //  Created by Tim Lau on 7/14/14.
 //  Copyright (c) 2014 Apportable. All rights reserved.
+// TODO: Bigger color selectors, bigger nodes, no white line connecting, menu, tutorials, animations, submit button showing
 //
 
 #import "Gameplay.h"
@@ -15,10 +16,9 @@
     CCNode *_contentNode;
     CCLabelTTF *_scoreLabel;
     
-    Vertex *_currentVertex;
     
     NSMutableArray *_listOfVertices;
-    NSMutableArray *colors;
+    NSMutableDictionary *colors;
     
     CCDrawNode *_static;
     
@@ -68,7 +68,7 @@
     
     // initialize variables
     _listOfVertices = [[NSMutableArray alloc] init];
-    colors = [[NSMutableArray alloc] init];
+    colors = [[NSMutableDictionary alloc] init];
 
 #pragma mark populate list of vertices
     
@@ -95,7 +95,7 @@
         //[self drawRect:s.boundingBox];
         
         // draw the dot
-        [map drawDot:s.position radius:7.5 color:[CCColor blackColor]];
+        [map drawDot:s.position radius:15 color:[CCColor blackColor]];
         [map setZOrder: 1];
         
         // demonstrate number in array
@@ -144,17 +144,18 @@
     NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
     
     // one extra for black
-    numOfColors = 4;
+    numOfColors = 10;
     for (int i = 1; i <= numOfColors; i++){
         CCSprite *c = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelector.png"];
         c.color = possibleColors[i-1];
         c.position = ccp(175 + (i-1)*50, 260);
-        CGSize colorNodeSize = CGSizeMake(100.0, 100.0);
-        [c setContentSize:colorNodeSize];
+        [c setScale: 0.5];
         c.visible = TRUE;
         
+        // c.name wasn't here and colors addObject: c because was NSMutableArray before
+        c.name = @"uniqueName";
         [_levelNode addChild:c];
-        [colors addObject:c];
+        [colors setObject:(NSNumber*)@0 forKey:c.name];
     }
     
     currentColor = [CCColor clearColor];
@@ -206,7 +207,7 @@
                 break;
             }
             else if (![self checkColorEquality:currentColor and: v.color]) {
-                [_static drawDot:v.position radius:7.5 color:currentColor];
+                [_static drawDot:v.position radius:15 color:currentColor];
                 v.color = currentColor;
                 
                 // setting how many vertices uncolored
