@@ -29,7 +29,6 @@
     
     CCButton *_submit;
     
-    int points;
     int numOfVertices;
     int numVerticesUncolored;
 }
@@ -47,8 +46,7 @@
     [self addChild:_static];
     
     //set the points to number of colors left
-    points = numOfColors - 1;
-    _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
+    //_scoreLabel.string = [NSString stringWithFormat:@"%d", points];
     
     //set the number of vertices uncolored to num of vertices
     numOfVertices = [_listOfVertices count];
@@ -145,23 +143,30 @@
 #pragma mark draw the color options
     NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
     CCLayoutBox *colorBox = [[CCLayoutBox alloc]init];
-    colorBox.anchorPoint = CGPointMake(.5, .5);
-    colorBox.position = CGPointMake(self.contentSizeInPoints.width/2, self.contentSizeInPoints.height/2);
-    
+    colorBox.anchorPoint = ccp(0.5, 0.5);
     // one extra for black
-    numOfColors = 4;
+    numOfColors = 10;
+    
     for (int i = 1; i <= numOfColors; i++){
         ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
         c.color = possibleColors[i-1];
-        c.position = ccp(175 + (i-1)*50, 260);
-        [c setScale: 0.5];
+        //c.position = ccp(175 + (i-1)*50, 260);
+        [c setScale: 1.0];
         c.visible = TRUE;
         c.used = FALSE;
         
         // c.name wasn't here and colors addObject: c because was NSMutableArray before
-        [_levelNode addChild:c];
+        [colorBox addChild:c];
         [colors addObject:c];
     }
+    
+    colorBox.direction = CCLayoutBoxDirectionHorizontal;
+    colorBox.spacing = 20.f;
+    [colorBox layout];
+    [self addChild: colorBox];
+    
+    CCDirector *thisDirector = [CCDirector sharedDirector];
+    colorBox.position = ccp([thisDirector viewSize].width/2.0, 260.0);
     
     currentColor = [CCColor clearColor];
     
@@ -183,18 +188,17 @@
     {
         double distanceToColor = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:c.position] andPoint: touchLoc];
         if(distanceToColor < 23.5){
+            CCLOG(@"distance to color: %f", distanceToColor);
             currentColor = c.color;
             
             // if points not 0 and not clicking black and has not been used
-            if (points > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]] && !c.used){
-                points--;
+            if (![self checkColorEquality:currentColor and:[CCColor blackColor]] && !c.used){
                 c.used = TRUE;
                 break;
             }
             
             //clicked black and number of colors left isn't more than max number
-            else if(points < (numOfColors-1) && [self checkColorEquality:currentColor and:[CCColor blackColor]]){
-                points++;
+            else if([self checkColorEquality:currentColor and:[CCColor blackColor]]){
                 break;
             }
         }
@@ -240,8 +244,8 @@
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
     //update the score
-    _scoreLabel.string = [NSString stringWithFormat:@"%d", points];
-    _scoreLabel.visible = true;
+    //_scoreLabel.string = [NSString stringWithFormat:@"%d", points];
+    //_scoreLabel.visible = true;
     
     if (numVerticesUncolored == 0)
     {
