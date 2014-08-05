@@ -154,7 +154,11 @@
 						<string>String</string>
 						<key>value</key>
 						<array>
+<<<<<<< HEAD
 							<string>Title</string>
+=======
+							<string>Play</string>
+>>>>>>> design
 							<false/>
 						</array>
 					</dict>
@@ -436,8 +440,11 @@
 				</array>
 			</dict>
 		</array>
+<<<<<<< HEAD
 		<key>selected</key>
 		<true/>
+=======
+>>>>>>> design
 	</dict>
 	<key>notes</key>
 	<array/>
