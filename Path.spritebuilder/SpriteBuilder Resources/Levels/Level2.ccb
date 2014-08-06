@@ -78,8 +78,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>90</real>
-									<real>223.5</real>
+									<real>116.5</real>
+									<real>243.5</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -140,8 +140,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>90</real>
-									<real>52.5</real>
+									<real>116.5</real>
+									<real>72.5</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -202,8 +202,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>257.5</real>
-									<real>138</real>
+									<real>283</real>
+									<real>158</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -231,8 +231,6 @@
 								<string>Vertex.ccb</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>UUID</key>
@@ -266,8 +264,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>425</real>
-									<real>223.5</real>
+									<real>451.5</real>
+									<real>243.5</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -328,8 +326,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>425</real>
-									<real>52.5</real>
+									<real>451.5</real>
+									<real>72.5</real>
 									<integer>0</integer>
 									<integer>0</integer>
 									<integer>0</integer>
@@ -357,6 +355,8 @@
 								<string>Vertex.ccb</string>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>

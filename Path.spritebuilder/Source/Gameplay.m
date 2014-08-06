@@ -10,6 +10,8 @@
 #import "Gameplay.h"
 #import "Vertex.h"
 #import"ColorSelector.h"
+#import "HTPressableButton-master/Classes/HTPressableButton.h"
+#import "UIColor+HTColor.h"
 
 
 @implementation Gameplay{
@@ -33,6 +35,10 @@
     
     int numOfVertices;
     int numVerticesUncolored;
+    
+    CCButton *backButton;
+    CCButton *clearButton;
+    
 }
 
 -(void)onEnter{
@@ -168,14 +174,25 @@
     [self addChild: colorBox];
     
     CCDirector *thisDirector = [CCDirector sharedDirector];
-    colorBox.position = ccp([thisDirector viewSize].width/2.0, 265.0);
+    colorBox.position = ccp([thisDirector viewSize].width/2.0, 35.0);
     
     currentColor = [CCColor clearColor];
     
 #pragma mark submit button
     
-    // make submit button invisible
-    _submit.visible = FALSE;
+    
+    backButton = [[CCButton alloc]init];
+    backButton.color = [[CCColor alloc] initWithUIColor:[UIColor ht_blueJeansColor]];
+    [backButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansDarkColor]] forState:CCControlStateHighlighted];
+    
+    //note: for the x coordinate, take the width of the button + displacement from side and then minus width
+    clearButton = [[CCButton alloc] init];
+    clearButton.color = [[CCColor alloc] initWithUIColor:[UIColor ht_blueJeansColor]];
+    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansDarkColor]] forState:CCControlStateHighlighted];
+
+    
+    [self addChild: backButton];
+    [self addChild:clearButton];
     
     
 }
@@ -253,12 +270,11 @@
     
     if (numVerticesUncolored == 0)
     {
-        _submit.visible = TRUE;
-    }
-    else{
-        _submit.visible = FALSE;
+        [self submit];
     }
 }
+
+#pragma mark methods for buttons
 
 - (void)clear {
     // reload this level
@@ -272,10 +288,17 @@
         message = [[CCLabelTTF alloc] initWithString:@"Yay you win!" fontName: @"Helvetica" fontSize:15];
     }
     else{
-        message = [[CCLabelTTF alloc] initWithString:@"Aww try again" fontName: @"Helvetica" fontSize:15];
+
+        CCDirector *dir = [CCDirector sharedDirector];
+        [dir pushScene:[dir runningScene]];
+        CCScene *mainScene = [CCBReader loadAsScene:@"FailScene"];
+        [[CCDirector sharedDirector] replaceScene:mainScene];
     }
-    [message setPosition: CGPointMake(self.contentSizeInPoints.width/2, self.contentSizeInPoints.height/2)];
-    [_levelNode addChild:message];
+}
+
+- (void)back {
+    CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+    [[CCDirector sharedDirector] replaceScene:mainScene];
 }
 
 #pragma mark helper functions
