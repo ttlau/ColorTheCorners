@@ -34,7 +34,7 @@
     CCLayoutBox *colorBox;
     
     int numOfVertices;
-    int numVerticesUncolored;
+    int numVerticesColored;
     
     CCButton *backButton;
     CCButton *clearButton;
@@ -58,7 +58,7 @@
     
     //set the number of vertices uncolored to num of vertices
     numOfVertices = [_listOfVertices count];
-    numVerticesUncolored = numOfVertices;
+    numVerticesColored = 0;
 
 }
 
@@ -99,8 +99,6 @@
         s.color = [CCColor blackColor];
         s.isConnected = FALSE;
         s.visible = FALSE;
-        
-        //[self drawRect:s.boundingBox];
         
         // draw the dot
         [map drawDot:s.position radius:15 color:[CCColor blackColor]];
@@ -240,18 +238,25 @@
             else if (![self checkColorEquality:currentColor and: v.color]) {
                 // setting how many vertices uncolored
                 
-                // if number of uncolored vertices is greater than 0 and current color is not black and that has not been previously colored
-                if (numVerticesUncolored > 0 && ![self checkColorEquality:currentColor and:[CCColor blackColor]] && [self checkColorEquality:v.color and:[CCColor blackColor]]){
-                    numVerticesUncolored--;
+                // if number of colored vertices is greater than 0 and current color is not black and that has not been previously colored
+                if (numVerticesColored < numOfVertices && ![self checkColorEquality:currentColor and:[CCColor blackColor]] && [self checkColorEquality:v.color and:[CCColor blackColor]]){
+                    numVerticesColored++;
                 }
                 
                 // if number of uncolored vertices is less than total number of vertices and current color is black and is not already black
-                else if(numVerticesUncolored < numOfVertices && [self checkColorEquality:currentColor and:[CCColor blackColor]] && ![self checkColorEquality:v.color and:[CCColor blackColor]]){
-                    numVerticesUncolored++;
+                else if(numVerticesColored > 0 && [self checkColorEquality:currentColor and:[CCColor blackColor]] && ![self checkColorEquality:v.color and:[CCColor blackColor]]){
+                    numVerticesColored--;
                 }
                 
                 [_static drawDot:v.position radius:15 color:currentColor];
                 v.color = currentColor;
+                
+                // only run bfs check when touching a vertex, so not in touchEnded
+                if (numVerticesColored == numOfVertices)
+                {
+                    [self submit];
+                }
+                break;
             }
         }
     }
@@ -264,14 +269,7 @@
 
 -(void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    //update the score
-    //_scoreLabel.string = [NSString stringWithFormat:@"%d", points];
-    //_scoreLabel.visible = true;
     
-    if (numVerticesUncolored == 0)
-    {
-        [self submit];
-    }
 }
 
 #pragma mark methods for buttons
@@ -283,12 +281,7 @@
 
 -(void)submit{
     Boolean isValidColoring = [self bfs: [_listOfVertices lastObject]];
-    CCLabelTTF *message;
     if (isValidColoring){
-        message = [[CCLabelTTF alloc] initWithString:@"Yay you win!" fontName: @"Helvetica" fontSize:15];
-    }
-    else{
-
         CCDirector *dir = [CCDirector sharedDirector];
         [dir pushScene:[dir runningScene]];
         CCScene *mainScene = [CCBReader loadAsScene:@"FailScene"];
