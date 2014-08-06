@@ -66,7 +66,7 @@
 - (void)didLoadFromCCB {
     
     // load the level
-    CCNode *level = [CCBReader load:@"Levels/Level2"];
+    CCNode *level = [CCBReader load:@"Levels/Level1"];
     [_levelNode addChild:level];
     
     // changing the background color
@@ -117,7 +117,10 @@
     
 #pragma mark draw the edges
     
-    NSArray *edges = @[@[@0, @1, @0, @1, @0], @[@1, @0, @1, @0, @1], @[@0, @1, @0, @1, @1], @[@1, @0, @1, @0, @1], @[@0, @1, @1, @1, @0]];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Level Properties" ofType:@"plist"];
+    NSDictionary *levels = [NSDictionary dictionaryWithContentsOfFile:path];
+    
+    NSArray *edges = [levels objectForKey:@"Level1"];
     
     
     int index = 0;
