@@ -4,7 +4,7 @@
 //
 //  Created by Tim Lau on 7/14/14.
 //  Copyright (c) 2014 Apportable. All rights reserved.
-// TODO: Bigger color selectors, bigger nodes, no white line connecting, menu, tutorials, animations, submit button showing
+// tutorials, animations
 //
 
 #import "Gameplay.h"
