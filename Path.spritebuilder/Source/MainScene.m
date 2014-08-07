@@ -12,6 +12,8 @@
 
 @implementation MainScene{
     HTPressableButton *playButton;
+    HTPressableButton *resetButton;
+    
 }
 
 -(void)didLoadFromCCB{
@@ -35,14 +37,26 @@
     playButton.shadowColor = [UIColor ht_citrusColor];
     [playButton addTarget:self action:@selector(play) forControlEvents:UIControlEventTouchUpInside];
     
-    [[[CCDirector sharedDirector] view]addSubview: playButton];
+    CGRect frame3 = CGRectMake([thisDirector viewSize].width/2 - 37.5, [thisDirector viewSize].height/2 + 87.5, 75, 35);
+    resetButton = [[HTPressableButton alloc] initWithFrame:frame3 buttonStyle:HTPressableButtonStyleRounded];
+    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
+    resetButton.buttonColor = [UIColor ht_sunflowerColor];
+    resetButton.shadowColor = [UIColor ht_citrusColor];
+    [resetButton addTarget:self action:@selector(reset) forControlEvents:UIControlEventTouchUpInside];
     
+    [[[CCDirector sharedDirector] view]addSubview: playButton];
+    [[[CCDirector sharedDirector] view]addSubview: resetButton];
 }
 
 - (void)play {
     CCScene *gameplayScene = [CCBReader loadAsScene:@"Gameplay"];
     [[CCDirector sharedDirector] replaceScene:gameplayScene];
     [playButton removeFromSuperview];
+    [resetButton removeFromSuperview];
+}
+
+-(void)reset{
+    [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:0] forKey:@"userLevel"];
 }
 
 @end

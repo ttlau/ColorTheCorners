@@ -39,6 +39,8 @@
     CCButton *backButton;
     CCButton *clearButton;
     
+    int userLevel;
+    
 }
 
 -(void)onEnter{
@@ -65,8 +67,19 @@
 // is called when CCB file has completed loading
 - (void)didLoadFromCCB {
     
+    
+    NSNumber *currentLevel = [[NSUserDefaults standardUserDefaults] objectForKey:@"userLevel"];
+    userLevel = [currentLevel intValue];
+    
+    if (currentLevel == nil)
+    {
+        userLevel = 1;
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:userLevel] forKey:@"userLevel"];
+        currentLevel = [[NSUserDefaults standardUserDefaults] objectForKey:@"userLevel"];
+    }
+    
     // load the level
-    CCNode *level = [CCBReader load:@"Levels/Level1"];
+    CCNode *level = [CCBReader load: [NSString stringWithFormat:@"Levels/Level%d",[currentLevel intValue]]];
     [_levelNode addChild:level];
     
     // changing the background color
@@ -120,7 +133,8 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Level Properties" ofType:@"plist"];
     NSDictionary *levels = [NSDictionary dictionaryWithContentsOfFile:path];
     
-    NSArray *edges = [levels objectForKey:@"Level1"];
+    NSDictionary *levelProperties = [levels objectForKey:[NSString stringWithFormat:@"Level%d", [currentLevel intValue]]];
+    NSArray *edges = [levelProperties objectForKey:@"Edges"];
     
     
     int index = 0;
@@ -153,8 +167,9 @@
     NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
     colorBox = [[CCLayoutBox alloc]init];
     colorBox.anchorPoint = ccp(0.5, 0.5);
+    
     // one extra for black
-    numOfColors = 4;
+    numOfColors = [[levelProperties objectForKey:@"Colors"] intValue];
     
     for (int i = 1; i <= numOfColors; i++){
         ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
@@ -179,7 +194,7 @@
     
     currentColor = [CCColor clearColor];
     
-#pragma mark submit button
+#pragma mark buttons
     
     
     backButton = [[CCButton alloc]init];
@@ -284,11 +299,21 @@
 
 -(void)submit{
     Boolean isValidColoring = [self bfs: [_listOfVertices lastObject]];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Level Properties" ofType:@"plist"];
+    NSDictionary *levels = [NSDictionary dictionaryWithContentsOfFile:path];
+    
     if (isValidColoring){
-        CCDirector *dir = [CCDirector sharedDirector];
-        [dir pushScene:[dir runningScene]];
-        CCScene *mainScene = [CCBReader loadAsScene:@"FailScene"];
-        [[CCDirector sharedDirector] replaceScene:mainScene];
+        userLevel++;
+        if (userLevel < [levels count]){
+            [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:userLevel] forKey:@"userLevel"];
+            CCScene *mainScene = [CCBReader loadAsScene:@"SuccessScene"];
+            [[CCDirector sharedDirector] replaceScene:mainScene];
+        }
+        else{
+            CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+            [[CCDirector sharedDirector] replaceScene:mainScene];
+
+        }
     }
 }
 

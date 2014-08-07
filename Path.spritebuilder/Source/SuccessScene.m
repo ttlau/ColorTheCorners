@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Apportable. All rights reserved.
 //
 
-#import "FailScene.h"
+#import "SuccessScene.h"
 #import "HTPressableButton-master/Classes/HTPressableButton.h"
 #import "UIColor+HTColor.h"
 
 
-@implementation FailScene{
+@implementation SuccessScene{
     HTPressableButton *clearButton;
 }
 
@@ -34,15 +34,16 @@
     [clearButton setTitle:@"Continue" forState:UIControlStateNormal];
     clearButton.buttonColor = [UIColor ht_sunflowerColor];
     clearButton.shadowColor = [UIColor ht_citrusColor];
-    [clearButton addTarget:self action:@selector(clear) forControlEvents:UIControlEventTouchUpInside];
+    [clearButton addTarget:self action:@selector(continue) forControlEvents:UIControlEventTouchUpInside];
     
     [[[CCDirector sharedDirector] view]addSubview: clearButton];
     
 }
 
-- (void)clear {
+- (void)continue {
     // reload this level
-    [[CCDirector sharedDirector] popScene];
+    CCScene *mainScene = [CCBReader loadAsScene:@"Gameplay"];
+    [[CCDirector sharedDirector] replaceScene:mainScene];
     [clearButton removeFromSuperview];
 }
 

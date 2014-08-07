@@ -1,5 +1,5 @@
 //
-//  FailScene.h
+//  SuccessScene.h
 //  Path
 //
 //  Created by Tim Lau on 8/5/14.
@@ -8,6 +8,6 @@
 
 #import "CCScene.h"
 
-@interface FailScene : CCScene
+@interface SuccessScene : CCScene
 
 @end

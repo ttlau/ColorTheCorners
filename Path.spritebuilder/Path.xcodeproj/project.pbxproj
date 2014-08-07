@@ -10,6 +10,7 @@
 		8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8392007918EE8E3300B6C429 /* GLKit.framework */; };
 		8F0B0880197491D5007FDD44 /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B087F197491D5007FDD44 /* Vertex.m */; };
 		8FA760EC198FF48900817947 /* ColorSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA760EB198FF48900817947 /* ColorSelector.m */; };
+		8FA9D7BD1992D36C009958A4 /* SuccessScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA9D7BC1992D36C009958A4 /* SuccessScene.m */; };
 		8FABDAA7197844C9008E3D3F /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FABDAA6197844C9008E3D3F /* Gameplay.m */; };
 		8FAEE461199145B3001105B8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8FAEE428199145B2001105B8 /* .gitignore */; };
 		8FAEE462199145B3001105B8 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8FAEE429199145B2001105B8 /* .travis.yml */; };
@@ -25,7 +26,6 @@
 		8FAEE482199145B3001105B8 /* HTPressableButtonColorScheme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FAEE45E199145B3001105B8 /* HTPressableButtonColorScheme.png */; };
 		8FAEE483199145B3001105B8 /* RectButtonImage.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8FAEE45F199145B3001105B8 /* RectButtonImage.gif */; };
 		8FAEE484199145B3001105B8 /* RoundedRectButtonImage.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8FAEE460199145B3001105B8 /* RoundedRectButtonImage.gif */; };
-		8FCADB17199175BB0024F5A5 /* FailScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCADB16199175BB0024F5A5 /* FailScene.m */; };
 		8FEB0479198819A400F29C30 /* Level Properties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FEB0478198819A400F29C30 /* Level Properties.plist */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
@@ -80,6 +80,8 @@
 		8F0B0882197491F9007FDD44 /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = Source/Vertex.h; sourceTree = "<group>"; };
 		8FA760EA198FF48900817947 /* ColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorSelector.h; path = Source/ColorSelector.h; sourceTree = "<group>"; };
 		8FA760EB198FF48900817947 /* ColorSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorSelector.m; path = Source/ColorSelector.m; sourceTree = "<group>"; };
+		8FA9D7BB1992D36C009958A4 /* SuccessScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuccessScene.h; path = Source/SuccessScene.h; sourceTree = "<group>"; };
+		8FA9D7BC1992D36C009958A4 /* SuccessScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuccessScene.m; path = Source/SuccessScene.m; sourceTree = "<group>"; };
 		8FABDAA5197844C9008E3D3F /* Gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameplay.h; path = Source/Gameplay.h; sourceTree = "<group>"; };
 		8FABDAA6197844C9008E3D3F /* Gameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameplay.m; path = Source/Gameplay.m; sourceTree = "<group>"; };
 		8FAEE428199145B2001105B8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -100,8 +102,6 @@
 		8FAEE45E199145B3001105B8 /* HTPressableButtonColorScheme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HTPressableButtonColorScheme.png; sourceTree = "<group>"; };
 		8FAEE45F199145B3001105B8 /* RectButtonImage.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = RectButtonImage.gif; sourceTree = "<group>"; };
 		8FAEE460199145B3001105B8 /* RoundedRectButtonImage.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = RoundedRectButtonImage.gif; sourceTree = "<group>"; };
-		8FCADB15199175BB0024F5A5 /* FailScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FailScene.h; path = Source/FailScene.h; sourceTree = "<group>"; };
-		8FCADB16199175BB0024F5A5 /* FailScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FailScene.m; path = Source/FailScene.m; sourceTree = "<group>"; };
 		8FEB0478198819A400F29C30 /* Level Properties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Level Properties.plist"; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
@@ -224,8 +224,8 @@
 				8FA760EA198FF48900817947 /* ColorSelector.h */,
 				8FA760EB198FF48900817947 /* ColorSelector.m */,
 				8FEB0478198819A400F29C30 /* Level Properties.plist */,
-				8FCADB15199175BB0024F5A5 /* FailScene.h */,
-				8FCADB16199175BB0024F5A5 /* FailScene.m */,
+				8FA9D7BB1992D36C009958A4 /* SuccessScene.h */,
+				8FA9D7BC1992D36C009958A4 /* SuccessScene.m */,
 				8FAEE427199145B2001105B8 /* HTPressableButton-master */,
 			);
 			name = Source;
@@ -453,7 +453,7 @@
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				8FABDAA7197844C9008E3D3F /* Gameplay.m in Sources */,
 				8F0B0880197491D5007FDD44 /* Vertex.m in Sources */,
-				8FCADB17199175BB0024F5A5 /* FailScene.m in Sources */,
+				8FA9D7BD1992D36C009958A4 /* SuccessScene.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				8FAEE464199145B3001105B8 /* HTPressableButtonPrefs.m in Sources */,
 				8FAEE466199145B3001105B8 /* UIImage+HTButton.m in Sources */,
