@@ -11,6 +11,7 @@
 		8F0B0880197491D5007FDD44 /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B087F197491D5007FDD44 /* Vertex.m */; };
 		8FA760EC198FF48900817947 /* ColorSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA760EB198FF48900817947 /* ColorSelector.m */; };
 		8FA9D7BD1992D36C009958A4 /* SuccessScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA9D7BC1992D36C009958A4 /* SuccessScene.m */; };
+		8FA9D7C51993E2F0009958A4 /* EndScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA9D7C41993E2F0009958A4 /* EndScene.m */; };
 		8FABDAA7197844C9008E3D3F /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FABDAA6197844C9008E3D3F /* Gameplay.m */; };
 		8FAEE461199145B3001105B8 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8FAEE428199145B2001105B8 /* .gitignore */; };
 		8FAEE462199145B3001105B8 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8FAEE429199145B2001105B8 /* .travis.yml */; };
@@ -82,6 +83,8 @@
 		8FA760EB198FF48900817947 /* ColorSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorSelector.m; path = Source/ColorSelector.m; sourceTree = "<group>"; };
 		8FA9D7BB1992D36C009958A4 /* SuccessScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuccessScene.h; path = Source/SuccessScene.h; sourceTree = "<group>"; };
 		8FA9D7BC1992D36C009958A4 /* SuccessScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuccessScene.m; path = Source/SuccessScene.m; sourceTree = "<group>"; };
+		8FA9D7C31993E2F0009958A4 /* EndScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EndScene.h; path = Source/EndScene.h; sourceTree = "<group>"; };
+		8FA9D7C41993E2F0009958A4 /* EndScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EndScene.m; path = Source/EndScene.m; sourceTree = "<group>"; };
 		8FABDAA5197844C9008E3D3F /* Gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gameplay.h; path = Source/Gameplay.h; sourceTree = "<group>"; };
 		8FABDAA6197844C9008E3D3F /* Gameplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Gameplay.m; path = Source/Gameplay.m; sourceTree = "<group>"; };
 		8FAEE428199145B2001105B8 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -213,19 +216,21 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				8F0B0882197491F9007FDD44 /* Vertex.h */,
-				8F0B087F197491D5007FDD44 /* Vertex.m */,
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
+				8FA760EA198FF48900817947 /* ColorSelector.h */,
+				8FA760EB198FF48900817947 /* ColorSelector.m */,
+				8F0B0882197491F9007FDD44 /* Vertex.h */,
+				8F0B087F197491D5007FDD44 /* Vertex.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				8FABDAA5197844C9008E3D3F /* Gameplay.h */,
 				8FABDAA6197844C9008E3D3F /* Gameplay.m */,
-				8FA760EA198FF48900817947 /* ColorSelector.h */,
-				8FA760EB198FF48900817947 /* ColorSelector.m */,
-				8FEB0478198819A400F29C30 /* Level Properties.plist */,
 				8FA9D7BB1992D36C009958A4 /* SuccessScene.h */,
 				8FA9D7BC1992D36C009958A4 /* SuccessScene.m */,
+				8FA9D7C31993E2F0009958A4 /* EndScene.h */,
+				8FA9D7C41993E2F0009958A4 /* EndScene.m */,
+				8FEB0478198819A400F29C30 /* Level Properties.plist */,
 				8FAEE427199145B2001105B8 /* HTPressableButton-master */,
 			);
 			name = Source;
@@ -460,6 +465,7 @@
 				8FAEE465199145B3001105B8 /* UIColor+HTColor.m in Sources */,
 				8FAEE463199145B3001105B8 /* HTPressableButton.m in Sources */,
 				8FA760EC198FF48900817947 /* ColorSelector.m in Sources */,
+				8FA9D7C51993E2F0009958A4 /* EndScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -71,6 +71,7 @@
     NSNumber *currentLevel = [[NSUserDefaults standardUserDefaults] objectForKey:@"userLevel"];
     userLevel = [currentLevel intValue];
     
+    // if currentLevel returns nil, set to the first level
     if (currentLevel == nil)
     {
         userLevel = 1;
@@ -81,10 +82,6 @@
     // load the level
     CCNode *level = [CCBReader load: [NSString stringWithFormat:@"Levels/Level%d",[currentLevel intValue]]];
     [_levelNode addChild:level];
-    
-    // changing the background color
-    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed:.204 green:.596 blue:.859];
-    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: .161 green: .502 blue: .725];
     
     
     // initialize variables
@@ -165,38 +162,42 @@
 
 #pragma mark draw the color options
     NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
+    
+    // create a layout box to group the color selectors together
     colorBox = [[CCLayoutBox alloc]init];
     colorBox.anchorPoint = ccp(0.5, 0.5);
     
-    // one extra for black
+    // from the plist, load the number of allowed colors
     numOfColors = [[levelProperties objectForKey:@"Colors"] intValue];
     
+    // set properties of the dots and add them to the layout box
     for (int i = 1; i <= numOfColors; i++){
         ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
         c.color = possibleColors[i-1];
-        //c.position = ccp(175 + (i-1)*50, 260);
         [c setScale: 1.0];
         c.visible = TRUE;
         c.used = FALSE;
         
-        // c.name wasn't here and colors addObject: c because was NSMutableArray before
         [colorBox addChild:c];
         [colors addObject:c];
     }
     
+    // set properties of the layout box and draw them
     colorBox.direction = CCLayoutBoxDirectionHorizontal;
     colorBox.spacing = 25.f;
     [colorBox layout];
     [self addChild: colorBox];
     
+    // because drawing on Gameplay scene, which is the parent of everything else, need to use CCDirector to find middle of screen
     CCDirector *thisDirector = [CCDirector sharedDirector];
     colorBox.position = ccp([thisDirector viewSize].width/2.0, 35.0);
     
+    // set the first color to the clearColor
     currentColor = [CCColor clearColor];
     
 #pragma mark buttons
     
-    
+    // initialize the back button
     backButton = [[CCButton alloc]init];
     backButton.color = [[CCColor alloc] initWithUIColor:[UIColor ht_blueJeansColor]];
     [backButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansDarkColor]] forState:CCControlStateHighlighted];
@@ -206,9 +207,15 @@
     clearButton.color = [[CCColor alloc] initWithUIColor:[UIColor ht_blueJeansColor]];
     [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansDarkColor]] forState:CCControlStateHighlighted];
 
-    
+    // add the CCButtons as children of the gameplay scene
     [self addChild: backButton];
     [self addChild:clearButton];
+
+#pragma mark making the level pretty
+    
+    // changing the background color
+    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed:.204 green:.596 blue:.859];
+    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: .161 green: .502 blue: .725];
     
     
 }
@@ -253,6 +260,8 @@
 //                [alert show];
                 break;
             }
+            
+            // if current color is not equal to the vertex color (prevent extraneous dots being created)
             else if (![self checkColorEquality:currentColor and: v.color]) {
                 // setting how many vertices uncolored
                 
@@ -266,6 +275,7 @@
                     numVerticesColored--;
                 }
                 
+                // drawing the dot and setting the invisible vertex color
                 [_static drawDot:v.position radius:15 color:currentColor];
                 v.color = currentColor;
                 
@@ -299,18 +309,26 @@
 
 -(void)submit{
     Boolean isValidColoring = [self bfs: [_listOfVertices lastObject]];
+    
+    // load in the path of NSUserDefaults
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Level Properties" ofType:@"plist"];
     NSDictionary *levels = [NSDictionary dictionaryWithContentsOfFile:path];
     
     if (isValidColoring){
+        
+        // go to the next level
         userLevel++;
+        
+        // if user still has levels to complete
         if (userLevel <= [levels count]){
             [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:userLevel] forKey:@"userLevel"];
             CCScene *mainScene = [CCBReader loadAsScene:@"SuccessScene"];
             [[CCDirector sharedDirector] replaceScene:mainScene];
         }
+        
+        // else load the end scene
         else{
-            CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
+            CCScene *mainScene = [CCBReader loadAsScene:@"EndScene"];
             [[CCDirector sharedDirector] replaceScene:mainScene];
 
         }
@@ -333,6 +351,7 @@
     return sqrt(dist);
 }
 
+/* attempt at drawing circles
 - (void)drawRect:(CGRect)rect {
     
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -346,7 +365,10 @@
     
         CGContextStrokePath(context);
 }
+*/
 
+
+// colors are equal only when RGBA of both colors are equal
 - (Boolean)checkColorEquality : (CCColor*)colorOne and: (CCColor*)colorTwo{
     if (colorOne.red != colorTwo.red){
         return false;
@@ -363,21 +385,37 @@
     return true;
 }
 
+
+// running BFS on the graph to check all permutations of vertex color equality
 - (Boolean)bfs: (Vertex*)startingVertex{
     
+    // list of the visited nodes
     NSMutableSet *visitedNodes = [NSMutableSet setWithObject:startingVertex];
+    
+    // the queue from which we pop off the next vertex to visit
     NSMutableArray *queue = [NSMutableArray arrayWithObject:startingVertex];
+    
+    // the color we need to see if anything else is equal to
     CCColor *colorToCheckAgainst;
     
+    // run bfs while still have vertices to relax
     while ([queue count] > 0)
     {
+        // get all the adjacent vertices of current vertex
         NSSet *newNodes = ((Vertex *)[queue objectAtIndex:0]).linkedNodes;
+        
+        // set the color to check against to the current vertex's color
         colorToCheckAgainst = ((Vertex *)[queue objectAtIndex:0]).color;
+        
+        // relax and check all nodes
         for (Vertex *newNode in newNodes)
         {
-            if (newNode.color.red == colorToCheckAgainst.red && newNode.color.green == colorToCheckAgainst.green && newNode.color.blue == colorToCheckAgainst.blue){
+            // if two adjacent nodes equal in color, return false
+            if ([self checkColorEquality:newNode.color and:currentColor]){
                 return FALSE;
             }
+            
+            // if a new node that we haven't relaxed, add to the queu and visitedNodes
             if (![visitedNodes containsObject:newNode])
             {
                 [visitedNodes addObject:newNode];
@@ -385,9 +423,11 @@
             }
         }
         
+        // check the next vertex
         [queue removeObjectAtIndex:0];
     }
     
+    // all vertices have been checked and therefore must be true
     return TRUE;
 }
 
