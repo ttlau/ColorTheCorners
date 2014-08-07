@@ -26,6 +26,12 @@
     message = [[CCLabelTTF alloc] initWithString:@"Thank You for Playing!" fontName: @"Papyrus" fontSize:25];
     [message setPosition: CGPointMake([thisDirector viewSize].width/2, [thisDirector viewSize].height/2)];
     [self addChild:message];
+}
+
+-(void)onEnterTransitionDidFinish{
+    [super onEnterTransitionDidFinish];
+    
+    CCDirector *thisDirector = [CCDirector sharedDirector];
     
     //note: for the x coordinate, take the width of the button + displacement from side and then minus width
     CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 32.5, [thisDirector viewSize].height/2 + 47.5, 105, 35);
@@ -36,13 +42,14 @@
     [homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     
     [[[CCDirector sharedDirector] view]addSubview: homeButton];
+
     
 }
 
 - (void)home {
     // reload this level
     CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
-    [[CCDirector sharedDirector] replaceScene:mainScene];
+    [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:1]];
     [homeButton removeFromSuperview];
 }
 

@@ -170,7 +170,8 @@
     colorBox.anchorPoint = ccp(0.5, 0.5);
     
     // from the plist, load the number of allowed colors
-    numOfColors = [[levelProperties objectForKey:@"Colors"] intValue];
+    //numOfColors = [[levelProperties objectForKey:@"Colors"] intValue];
+    numOfColors = 10;
     
     // set properties of the dots and add them to the layout box
     for (int i = 1; i <= numOfColors; i++){
@@ -247,7 +248,13 @@
         // custom set, need to find a way to scale
         if(distanceToColor < c.contentSize.width/2){
             currentColor = c.color;
-            highlighter.position = c.positionInPoints;
+            id moveAction = [CCActionMoveTo actionWithDuration:.5 position:c.positionInPoints];
+            
+            [highlighter runAction:
+             [CCActionSequence actions:
+              moveAction,
+              nil]];
+            //highlighter.position = c.positionInPoints;
         }
     }
 
@@ -327,14 +334,13 @@
         if (userLevel <= [levels count]){
             [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:userLevel] forKey:@"userLevel"];
             CCScene *mainScene = [CCBReader loadAsScene:@"SuccessScene"];
-            [[CCDirector sharedDirector] replaceScene:mainScene];
+            [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1]];
         }
         
         // else load the end scene
         else{
             CCScene *mainScene = [CCBReader loadAsScene:@"EndScene"];
-            [[CCDirector sharedDirector] replaceScene:mainScene];
-
+            [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1]];
         }
     }
 }
@@ -377,10 +383,10 @@
     if (colorOne.red != colorTwo.red){
         return false;
     }
-    if (colorOne.green != colorTwo.red){
+    if (colorOne.green != colorTwo.green){
         return false;
     }
-    if(colorOne.blue != colorTwo.red){
+    if(colorOne.blue != colorTwo.blue){
         return false;
     }
     if(colorOne.alpha != colorTwo.alpha){
@@ -415,7 +421,7 @@
         for (Vertex *newNode in newNodes)
         {
             // if two adjacent nodes equal in color, return false
-            if ([self checkColorEquality:newNode.color and:currentColor]){
+            if ([self checkColorEquality:newNode.color and:colorToCheckAgainst]){
                 return FALSE;
             }
             

@@ -27,6 +27,13 @@
     message = [[CCLabelTTF alloc] initWithString:@"Yay you win!" fontName: @"Helvetica" fontSize:15];
     [message setPosition: CGPointMake([thisDirector viewSize].width/2, [thisDirector viewSize].height/2)];
     [self addChild:message];
+}
+
+-(void)onEnterTransitionDidFinish{
+    
+    [super onEnterTransitionDidFinish];
+    
+    CCDirector *thisDirector = [CCDirector sharedDirector];
     
     //note: for the x coordinate, take the width of the button + displacement from side and then minus width
     CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 32.5, [thisDirector viewSize].height/2 + 47.5, 75, 35);
@@ -37,14 +44,16 @@
     [clearButton addTarget:self action:@selector(continue) forControlEvents:UIControlEventTouchUpInside];
     
     [[[CCDirector sharedDirector] view]addSubview: clearButton];
-    
+
 }
 
 - (void)continue {
+    
+    [clearButton removeFromSuperview];
+    
     // reload this level
     CCScene *mainScene = [CCBReader loadAsScene:@"Gameplay"];
-    [[CCDirector sharedDirector] replaceScene:mainScene];
-    [clearButton removeFromSuperview];
+    [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1]];
 }
 
 @end
