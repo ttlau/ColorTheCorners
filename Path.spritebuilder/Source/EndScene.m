@@ -34,7 +34,7 @@
     CCDirector *thisDirector = [CCDirector sharedDirector];
     
     //note: for the x coordinate, take the width of the button + displacement from side and then minus width
-    CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 32.5, [thisDirector viewSize].height/2 + 47.5, 105, 35);
+    CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 57.5, [thisDirector viewSize].height/2 + 47.5, 115, 35);
     homeButton = [[HTPressableButton alloc] initWithFrame:frame2 buttonStyle:HTPressableButtonStyleRounded];
     [homeButton setTitle:@"Return Home" forState:UIControlStateNormal];
     homeButton.buttonColor = [UIColor ht_sunflowerColor];

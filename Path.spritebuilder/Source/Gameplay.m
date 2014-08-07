@@ -113,7 +113,7 @@
         s.visible = FALSE;
         
         // draw the dot
-        [map drawDot:s.position radius:15 color:[CCColor blackColor]];
+        [map drawDot:s.position radius:20 color:[CCColor blackColor]];
         [map setZOrder: 1];
         
         // demonstrate number in array
@@ -149,7 +149,7 @@
         {
             if ([(NSNumber*)edges[index][secondIndex] isEqualToNumber:@1])
             {
-                [map drawSegmentFrom:((Vertex*)[_listOfVertices objectAtIndex:index]).positionInPoints to:((Vertex*)[_listOfVertices objectAtIndex:secondIndex]).positionInPoints radius:2.0 color:[CCColor colorWithRed:0.925 green:0.941 blue:0.945]];
+                [map drawSegmentFrom:((Vertex*)[_listOfVertices objectAtIndex:index]).positionInPoints to:((Vertex*)[_listOfVertices objectAtIndex:secondIndex]).positionInPoints radius:4.0 color:[CCColor colorWithRed:0.925 green:0.941 blue:0.945]];
                 [map setZOrder:0];
                 
                 // second index are things that are connected to current vertex, with current vertex as origin point
@@ -170,8 +170,8 @@
     colorBox.anchorPoint = ccp(0.5, 0.5);
     
     // from the plist, load the number of allowed colors
-    //numOfColors = [[levelProperties objectForKey:@"Colors"] intValue];
-    numOfColors = 10;
+    numOfColors = [[levelProperties objectForKey:@"Colors"] intValue];
+    //numOfColors = 10;
     
     // set properties of the dots and add them to the layout box
     for (int i = 1; i <= numOfColors; i++){
@@ -203,7 +203,7 @@
     
     // because drawing on Gameplay scene, which is the parent of everything else, need to use CCDirector to find middle of screen
     CCDirector *thisDirector = [CCDirector sharedDirector];
-    colorBox.position = ccp([thisDirector viewSize].width/2.0, 35.0);
+    colorBox.position = ccp([thisDirector viewSize].width/2.0, 50.0);
     
     // set the first color to the clearColor
     currentColor = [CCColor clearColor];
@@ -287,7 +287,7 @@
                 }
                 
                 // drawing the dot and setting the invisible vertex color
-                [_static drawDot:v.position radius:15 color:currentColor];
+                [_static drawDot:v.position radius:20 color:currentColor];
                 v.color = currentColor;
                 
                 // only run bfs check when touching a vertex, so not in touchEnded
