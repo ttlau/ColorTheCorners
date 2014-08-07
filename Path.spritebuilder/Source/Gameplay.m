@@ -33,6 +33,8 @@
     
     CCLayoutBox *colorBox;
     
+    CCSprite *highlighter;
+    
     int numOfVertices;
     int numVerticesColored;
     
@@ -186,7 +188,17 @@
     colorBox.direction = CCLayoutBoxDirectionHorizontal;
     colorBox.spacing = 25.f;
     [colorBox layout];
+    
     [self addChild: colorBox];
+    
+    // make the color selector highlighter - basically tells which is current color being used
+    ColorSelector *firstSelector = (ColorSelector*)colors[0];
+    highlighter = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelectorHighlighter.png"];
+    highlighter.color = [CCColor colorWithRed:.82 green: .859 blue: .741];
+    highlighter.contentSize = CGSizeMake(firstSelector.contentSize.width, firstSelector.contentSize.height);
+    highlighter.anchorPoint = ccp(0.5, 0.5);
+    highlighter.position = firstSelector.positionInPoints;
+    [firstSelector addChild: highlighter z: firstSelector.zOrder-1];
     
     // because drawing on Gameplay scene, which is the parent of everything else, need to use CCDirector to find middle of screen
     CCDirector *thisDirector = [CCDirector sharedDirector];
@@ -226,6 +238,7 @@
     
     //TODO: see if can optimize for loops
     
+#pragma mark check which color was selected
     for (ColorSelector *c in colors)
     {
         // c is in node space of color Box
@@ -234,20 +247,11 @@
         // custom set, need to find a way to scale
         if(distanceToColor < c.contentSize.width/2){
             currentColor = c.color;
-            
-            // if points not 0 and not clicking black and has not been used
-            if (![self checkColorEquality:currentColor and:[CCColor blackColor]] && !c.used){
-                c.used = TRUE;
-                break;
-            }
-            
-            //clicked black and number of colors left isn't more than max number
-            else if([self checkColorEquality:currentColor and:[CCColor blackColor]]){
-                break;
-            }
+            highlighter.position = c.positionInPoints;
         }
     }
-    
+
+#pragma mark check which vertex was touched
     for (Vertex *v in _listOfVertices)
     {
         double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
