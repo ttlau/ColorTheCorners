@@ -56,7 +56,7 @@
 }
 
 -(void)reset{
-    [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:0] forKey:@"userLevel"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:1] forKey:@"userLevel"];
 }
 
 @end

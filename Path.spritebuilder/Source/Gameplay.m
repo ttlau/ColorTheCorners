@@ -304,7 +304,7 @@
     
     if (isValidColoring){
         userLevel++;
-        if (userLevel < [levels count]){
+        if (userLevel <= [levels count]){
             [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:userLevel] forKey:@"userLevel"];
             CCScene *mainScene = [CCBReader loadAsScene:@"SuccessScene"];
             [[CCDirector sharedDirector] replaceScene:mainScene];
