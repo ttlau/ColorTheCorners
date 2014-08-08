@@ -163,7 +163,7 @@
     }
 
 #pragma mark draw the color options
-    NSArray *possibleColors = @[[CCColor blackColor],[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
+    NSArray *possibleColors = @[[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
     
     // create a layout box to group the color selectors together
     colorBox = [[CCLayoutBox alloc]init];
@@ -237,65 +237,56 @@
 {
     CGPoint touchLoc = [touch locationInNode:_contentNode];
     
-    //TODO: see if can optimize for loops
+    if ([self withinLayoutBox:touchLoc]){
     
 #pragma mark check which color was selected
-    for (ColorSelector *c in colors)
-    {
-        // c is in node space of color Box
-        double distanceToColor = [self distanceBetweenPoint:[colorBox convertToWorldSpace:c.positionInPoints] andPoint: touchLoc];
+        for (ColorSelector *c in colors)
+        {
+            // c is in node space of color Box
+            double distanceToColor = [self distanceBetweenPoint:[colorBox convertToWorldSpace:c.positionInPoints] andPoint: touchLoc];
         
-        // custom set, need to find a way to scale
-        if(distanceToColor < c.contentSize.width/2){
-            currentColor = c.color;
-            id moveAction = [CCActionMoveTo actionWithDuration:.5 position:c.positionInPoints];
+            // custom set, need to find a way to scale
+            if(distanceToColor < c.contentSize.width/2){
+                currentColor = c.color;
+                id moveAction = [CCActionMoveTo actionWithDuration:.5 position:c.positionInPoints];
             
-            [highlighter runAction:
-             [CCActionSequence actions:
-              moveAction,
-              nil]];
-            //highlighter.position = c.positionInPoints;
-        }
-    }
-
-#pragma mark check which vertex was touched
-    for (Vertex *v in _listOfVertices)
-    {
-        double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
-        
-        if (distanceToVertex < 15){
-            // if current color is clear, player has not chosen a color
-            if ([self checkColorEquality:currentColor and:[CCColor clearColor]])
-            {
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"You must select a color first!" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-//                [alert show];
+                [highlighter runAction:[CCActionSequence actions:moveAction,nil]];
                 break;
             }
+        }
+    }
+    
+    else{
+
+#pragma mark check which vertex was touched
+        for (Vertex *v in _listOfVertices)
+        {
+            double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
+        
+            if (distanceToVertex < 15){
             
-            // if current color is not equal to the vertex color (prevent extraneous dots being created)
-            else if (![self checkColorEquality:currentColor and: v.color]) {
-                // setting how many vertices uncolored
+                // if current color is not equal to the vertex color (prevent extraneous dots being created)
+                if (![self checkColorEquality:currentColor and: v.color]) {
+                    // setting how many vertices uncolored
                 
-                // if number of colored vertices is greater than 0 and current color is not black and that has not been previously colored
-                if (numVerticesColored < numOfVertices && ![self checkColorEquality:currentColor and:[CCColor blackColor]] && [self checkColorEquality:v.color and:[CCColor blackColor]]){
-                    numVerticesColored++;
+                    // if number of colored vertices is greater than 0 and current color is not black and that has not been previously colored
+                    if (numVerticesColored < numOfVertices && [self checkColorEquality:v.color and:[CCColor blackColor]])
+                    {
+                        numVerticesColored++;
+                    }
+                
+                 
+                    // drawing the dot and setting the invisible vertex color
+                    [_static drawDot:v.position radius:20 color:currentColor];
+                    v.color = currentColor;
+                
+                    // only run bfs check when touching a vertex, so not in touchEnded
+                    if (numVerticesColored == numOfVertices)
+                    {
+                        [self submit];
+                    }
+                    break;
                 }
-                
-                // if number of uncolored vertices is less than total number of vertices and current color is black and is not already black
-                else if(numVerticesColored > 0 && [self checkColorEquality:currentColor and:[CCColor blackColor]] && ![self checkColorEquality:v.color and:[CCColor blackColor]]){
-                    numVerticesColored--;
-                }
-                
-                // drawing the dot and setting the invisible vertex color
-                [_static drawDot:v.position radius:20 color:currentColor];
-                v.color = currentColor;
-                
-                // only run bfs check when touching a vertex, so not in touchEnded
-                if (numVerticesColored == numOfVertices)
-                {
-                    [self submit];
-                }
-                break;
             }
         }
     }
@@ -347,7 +338,7 @@
 
 - (void)back {
     CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
-    [[CCDirector sharedDirector] replaceScene:mainScene];
+    [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:1]];
 }
 
 #pragma mark helper functions
@@ -359,6 +350,14 @@
     double dy = (point2.y-point1.y);
     double dist = dx*dx + dy*dy;
     return sqrt(dist);
+}
+
+-(Boolean)withinLayoutBox: (CGPoint)touch{
+    float minX = colorBox.position.x - colorBox.contentSize.width/2;
+    float maxX = colorBox.position.x + colorBox.contentSize.width/2;
+    float minY = colorBox.position.y - colorBox.contentSize.height/2;
+    float maxY = colorBox.position.y + colorBox.contentSize.height/2;
+    return (touch.x >= minX && touch.x <= maxX && touch.y >= minY && touch.y <= maxY);
 }
 
 /* attempt at drawing circles

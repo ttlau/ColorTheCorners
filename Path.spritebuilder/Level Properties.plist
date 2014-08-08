@@ -5,7 +5,7 @@
 	<key>Level1</key>
 	<dict>
 		<key>Colors</key>
-		<integer>4</integer>
+		<integer>3</integer>
 		<key>Edges</key>
 		<array>
 			<array>
@@ -48,7 +48,7 @@
 	<key>Level2</key>
 	<dict>
 		<key>Colors</key>
-		<integer>3</integer>
+		<integer>2</integer>
 		<key>Edges</key>
 		<array>
 			<array>
@@ -136,7 +136,7 @@
 	<key>Level3</key>
 	<dict>
 		<key>Colors</key>
-		<integer>4</integer>
+		<integer>3</integer>
 		<key>Edges</key>
 		<array>
 			<array>
@@ -192,7 +192,7 @@
 	<key>Level4</key>
 	<dict>
 		<key>Colors</key>
-		<integer>4</integer>
+		<integer>3</integer>
 		<key>Edges</key>
 		<array>
 			<array>
