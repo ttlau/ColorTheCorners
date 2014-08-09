@@ -19,6 +19,7 @@
     CCNode *_levelNode;
     CCNode *_contentNode;
     CCLabelTTF *_scoreLabel;
+    CCLabelTTF *tutorialText;
     
     
     NSMutableArray *_listOfVertices;
@@ -63,6 +64,10 @@
     //set the number of vertices uncolored to num of vertices
     numOfVertices = [_listOfVertices count];
     numVerticesColored = 0;
+    
+    if (userLevel == 1){
+        [self presentWelcome];
+    }
 
 }
 
@@ -251,6 +256,14 @@
                 id moveAction = [CCActionMoveTo actionWithDuration:.5 position:c.positionInPoints];
             
                 [highlighter runAction:[CCActionSequence actions:moveAction,nil]];
+                
+                if (userLevel == 1 && [self checkColorEquality:currentColor and:[CCColor redColor]]){
+                    tutorialText.visible = FALSE;
+                    [tutorialText setString: @"Place it here!"];
+                    tutorialText.position = [_contentNode convertToWorldSpace:((Vertex*)_listOfVertices[0]).position];
+                    tutorialText.visible = TRUE;
+                }
+                
                 break;
             }
         }
@@ -267,9 +280,8 @@
             
                 // if current color is not equal to the vertex color (prevent extraneous dots being created)
                 if (![self checkColorEquality:currentColor and: v.color]) {
-                    // setting how many vertices uncolored
                 
-                    // if number of colored vertices is greater than 0 and current color is not black and that has not been previously colored
+                    // if number of colored vertices is less than total number of verticesnand that has not been previously colored
                     if (numVerticesColored < numOfVertices && [self checkColorEquality:v.color and:[CCColor blackColor]])
                     {
                         numVerticesColored++;
@@ -438,6 +450,31 @@
     
     // all vertices have been checked and therefore must be true
     return TRUE;
+}
+
+#pragma mark tutorial 
+
+-(void)presentWelcome{
+    
+    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Welcome!"] fontName: @"Papyrus" fontSize:30];
+    [tutorialText setPosition: ccp(([CCDirector sharedDirector].viewSize).width/2, 275)];
+    [self addChild:tutorialText];
+    
+    
+    [NSTimer scheduledTimerWithTimeInterval:5.0
+                                     target:self
+                                   selector:@selector(removeWelcomeText:)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+-(void)removeWelcomeText: (NSTimer*)timer{
+    
+    tutorialText.visible = NO;
+    [tutorialText setString:@"Start by choosing the red dot!"];
+    tutorialText.fontSize = 15;
+    [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-35)];
+    tutorialText.visible = YES;
 }
 
 @end
