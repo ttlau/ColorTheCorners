@@ -24,7 +24,7 @@
     ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: 1 green: .941 blue: .647];
     
     CCLabelTTF *message;
-    message = [[CCLabelTTF alloc] initWithString:@"Yay you win!" fontName: @"Helvetica" fontSize:15];
+    message = [[CCLabelTTF alloc] initWithString:@"Yay you win!" fontName: @"Papyrus" fontSize:30];
     [message setPosition: CGPointMake([thisDirector viewSize].width/2, [thisDirector viewSize].height/2)];
     [self addChild:message];
 }

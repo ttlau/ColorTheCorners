@@ -45,6 +45,8 @@
     
     int userLevel;
     
+    CCNodeColor *flashView;
+    
 }
 
 -(void)onEnter{
@@ -270,7 +272,7 @@
         }
     }
     
-    else{
+    else if (![self checkColorEquality:currentColor and: [CCColor clearColor]]){
 
 #pragma mark check which vertex was touched
         for (Vertex *v in _listOfVertices)
@@ -282,7 +284,7 @@
                 // if current color is not equal to the vertex color (prevent extraneous dots being created)
                 if (![self checkColorEquality:currentColor and: v.color]) {
                     
-                    // if number of colored vertices is less than total number of verticesnand that has not been previously colored
+                    // if number of colored vertices is less than total number of vertices and that has not been previously colored and currently selected a color
                     if (numVerticesColored < numOfVertices && [self checkColorEquality:v.color and:[CCColor blackColor]])
                     {
                         numVerticesColored++;
@@ -294,31 +296,34 @@
                     v.color = currentColor;
                     
                     // tutorial
-                    if (userLevel == 1 && v.tag == ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
-                        tutorialText.visible = FALSE;
-                        [tutorialText setString: [NSString stringWithFormat:@"%@\r%@", @"Now that this dot is red",@"The two dots connected to it can't be red!"]];
-                        tutorialText.anchorPoint = ccp(0.4, 0.55);
-                        tutorialText.horizontalAlignment = CCTextAlignmentCenter;
-                        tutorialText.visible = TRUE;
-                    }
-                    else if (userLevel == 1 && v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
-                        [_static drawDot:v.position radius:20 color:[CCColor blackColor]];
-                        v.color = [CCColor blackColor];
-                        numVerticesColored--;
-                    }
-                    else if (numVerticesColored > 1){
-                        tutorialText.visible = FALSE;
+                    if (userLevel == 1){
+                        if (v.tag == ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
+                            tutorialText.visible = FALSE;
+                            [tutorialText setString: [NSString stringWithFormat:@"%@\r%@", @"Now that this dot is red",@"The two dots connected to it can't be red!"]];
+                            tutorialText.anchorPoint = ccp(0.4, 0.55);
+                            tutorialText.horizontalAlignment = CCTextAlignmentCenter;
+                            tutorialText.visible = TRUE;
+                        }
+                        else if (v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
+                            [_static drawDot:v.position radius:20 color:[CCColor blackColor]];
+                            v.color = [CCColor blackColor];
+                            numVerticesColored--;
+                        }
+                        else if (numVerticesColored > 1){
+                            tutorialText.visible = FALSE;
+                        }
                     }
                     
                     // flashes screen
-                    UIView *flashView = [[UIView alloc] initWithFrame:self.boundingBox];
-                    flashView.backgroundColor = currentColor.UIColor;
-                    [[[CCDirector sharedDirector] view]addSubview: flashView];
-                    [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
-                        flashView.alpha = 0.99f;
-                    } completion:^(BOOL finished) {
-                        [flashView removeFromSuperview];
-                    }];
+                   flashView = [[CCNodeColor alloc]initWithColor: [currentColor colorWithAlphaComponent:0.3f] width:[[CCDirector sharedDirector]viewSize].width height: [[CCDirector sharedDirector]viewSize].height];
+                    flashView.position = ccp(0,0);
+                    [self addChild:flashView];
+                                      [NSTimer
+                                      scheduledTimerWithTimeInterval:(NSTimeInterval)(0.25)
+                                      target:self
+                                      selector:@selector(removeColorFlash)
+                                      userInfo:nil
+                                      repeats:false];
                 
                     // only run bfs check when touching a vertex, so not in touchEnded
                     if (numVerticesColored == numOfVertices)
@@ -485,28 +490,35 @@
 -(void)presentWelcome{
     
     tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"Papyrus" fontSize:25];
-    [self blinkText];
     [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-40)];
     [self addChild:tutorialText];
 }
 
+-(void)removeColorFlash{
+    [self removeChild:flashView];
+}
+
 -(void)blinkText{
-    BOOL blinkStatus = NO;
     
-    NSTimer *timer = [NSTimer
-                      scheduledTimerWithTimeInterval:(NSTimeInterval)(1.0)
+    BOOL blinkStatus = NO;
+                      [NSTimer
+                      scheduledTimerWithTimeInterval:(NSTimeInterval)(0.5)
                       target:self
-                      selector:@selector(blink: blinkStatus:)
-                      userInfo:nil
+                      selector:@selector(blink:)
+                      userInfo:[NSNumber numberWithBool:blinkStatus]
                       repeats:TRUE];
 }
 
--(void)blink: (BOOL)blinkStatus :(NSTimer*)timer{
+-(void)blink:(NSTimer*)timer{
+    NSNumber* userInfo = (NSNumber*)timer.userInfo;
+    BOOL blinkStatus = [userInfo boolValue];
+    
+    
     if(blinkStatus == NO){
-        tutorialText.color = [CCColor whiteColor];
+        tutorialText.color = [CCColor blackColor];
         blinkStatus = YES;
     }else {
-        tutorialText.color = [CCColor grayColor];
+        tutorialText.color = [CCColor whiteColor];
         blinkStatus = NO;
     }
 }
