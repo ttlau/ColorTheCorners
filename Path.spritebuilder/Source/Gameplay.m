@@ -299,8 +299,9 @@
                     if (userLevel == 1){
                         if (v.tag == ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
                             tutorialText.visible = FALSE;
-                            [tutorialText setString: [NSString stringWithFormat:@"%@\r%@", @"Now that this dot is red",@"The two dots connected to it can't be red!"]];
-                            tutorialText.anchorPoint = ccp(0.4, 0.55);
+                            [tutorialText setString: [NSString stringWithFormat:@"%@\r%@\r%@", @"Now that this dot is red",@"The two dots connected to it", @"can't be red!"]];
+                            tutorialText.anchorPoint = ccp(0.5, 0.5);
+                            tutorialText.position = ccp([[CCDirector sharedDirector]viewSize].width/2, [[CCDirector sharedDirector]viewSize].height/2);
                             tutorialText.horizontalAlignment = CCTextAlignmentCenter;
                             tutorialText.visible = TRUE;
                         }
@@ -472,7 +473,7 @@
 
 -(void)presentWelcome{
     
-    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"Papyrus" fontSize:25];
+    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"HelveticaNeue-UltraLight" fontSize:25];
     [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-40)];
     [self addChild:tutorialText];
 }

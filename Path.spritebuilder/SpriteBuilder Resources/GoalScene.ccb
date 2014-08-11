@@ -236,7 +236,7 @@ Are the Same Color!</string>
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>Papyrus</string>
+						<string>HelveticaNeue-UltraLight</string>
 					</dict>
 					<dict>
 						<key>name</key>
