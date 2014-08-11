@@ -4,7 +4,8 @@
 //
 //  Created by Tim Lau on 7/14/14.
 //  Copyright (c) 2014 Apportable. All rights reserved.
-// tutorials, animations
+// TODO: tutorials - bigger text, placement, call to action (now you finish!), the actual goal in the beginning, animations
+// ask - transparent flashing screen, and blinking text
 //
 
 #import "Gameplay.h"
@@ -119,7 +120,7 @@
         
         // draw the dot
         [map drawDot:s.position radius:20 color:[CCColor blackColor]];
-        [map setZOrder: 1];
+        [map setZOrder: 99];
         
         // demonstrate number in array
         CCLabelTTF *tagString;
@@ -257,7 +258,7 @@
             
                 [highlighter runAction:[CCActionSequence actions:moveAction,nil]];
                 
-                if (userLevel == 1 && [self checkColorEquality:currentColor and:[CCColor redColor]]){
+                if (userLevel == 1 && [self checkColorEquality:currentColor and:[CCColor redColor]] && numVerticesColored == 0){
                     tutorialText.visible = FALSE;
                     [tutorialText setString: @"Place it here!"];
                     tutorialText.position = [_contentNode convertToWorldSpace:((Vertex*)_listOfVertices[0]).position];
@@ -280,7 +281,7 @@
             
                 // if current color is not equal to the vertex color (prevent extraneous dots being created)
                 if (![self checkColorEquality:currentColor and: v.color]) {
-                
+                    
                     // if number of colored vertices is less than total number of verticesnand that has not been previously colored
                     if (numVerticesColored < numOfVertices && [self checkColorEquality:v.color and:[CCColor blackColor]])
                     {
@@ -291,6 +292,33 @@
                     // drawing the dot and setting the invisible vertex color
                     [_static drawDot:v.position radius:20 color:currentColor];
                     v.color = currentColor;
+                    
+                    // tutorial
+                    if (userLevel == 1 && v.tag == ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
+                        tutorialText.visible = FALSE;
+                        [tutorialText setString: [NSString stringWithFormat:@"%@\r%@", @"Now that this dot is red",@"The two dots connected to it can't be red!"]];
+                        tutorialText.anchorPoint = ccp(0.4, 0.55);
+                        tutorialText.horizontalAlignment = CCTextAlignmentCenter;
+                        tutorialText.visible = TRUE;
+                    }
+                    else if (userLevel == 1 && v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
+                        [_static drawDot:v.position radius:20 color:[CCColor blackColor]];
+                        v.color = [CCColor blackColor];
+                        numVerticesColored--;
+                    }
+                    else if (numVerticesColored > 1){
+                        tutorialText.visible = FALSE;
+                    }
+                    
+                    // flashes screen
+                    UIView *flashView = [[UIView alloc] initWithFrame:self.boundingBox];
+                    flashView.backgroundColor = currentColor.UIColor;
+                    [[[CCDirector sharedDirector] view]addSubview: flashView];
+                    [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
+                        flashView.alpha = 0.99f;
+                    } completion:^(BOOL finished) {
+                        [flashView removeFromSuperview];
+                    }];
                 
                     // only run bfs check when touching a vertex, so not in touchEnded
                     if (numVerticesColored == numOfVertices)
@@ -456,25 +484,31 @@
 
 -(void)presentWelcome{
     
-    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Welcome!"] fontName: @"Papyrus" fontSize:30];
-    [tutorialText setPosition: ccp(([CCDirector sharedDirector].viewSize).width/2, 275)];
+    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"Papyrus" fontSize:25];
+    [self blinkText];
+    [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-40)];
     [self addChild:tutorialText];
-    
-    
-    [NSTimer scheduledTimerWithTimeInterval:5.0
-                                     target:self
-                                   selector:@selector(removeWelcomeText:)
-                                   userInfo:nil
-                                    repeats:NO];
 }
 
--(void)removeWelcomeText: (NSTimer*)timer{
+-(void)blinkText{
+    BOOL blinkStatus = NO;
     
-    tutorialText.visible = NO;
-    [tutorialText setString:@"Start by choosing the red dot!"];
-    tutorialText.fontSize = 15;
-    [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-35)];
-    tutorialText.visible = YES;
+    NSTimer *timer = [NSTimer
+                      scheduledTimerWithTimeInterval:(NSTimeInterval)(1.0)
+                      target:self
+                      selector:@selector(blink: blinkStatus:)
+                      userInfo:nil
+                      repeats:TRUE];
+}
+
+-(void)blink: (BOOL)blinkStatus :(NSTimer*)timer{
+    if(blinkStatus == NO){
+        tutorialText.color = [CCColor whiteColor];
+        blinkStatus = YES;
+    }else {
+        tutorialText.color = [CCColor grayColor];
+        blinkStatus = NO;
+    }
 }
 
 @end

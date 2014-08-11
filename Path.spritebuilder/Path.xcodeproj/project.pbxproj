@@ -10,6 +10,8 @@
 		8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8392007918EE8E3300B6C429 /* GLKit.framework */; };
 		8F0B0880197491D5007FDD44 /* Vertex.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B087F197491D5007FDD44 /* Vertex.m */; };
 		8FA760EC198FF48900817947 /* ColorSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA760EB198FF48900817947 /* ColorSelector.m */; };
+		8FA85A4619993D88003DC69E /* WelcomeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA85A4519993D88003DC69E /* WelcomeScene.m */; };
+		8FA85A4A19993E75003DC69E /* GoalScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA85A4919993E75003DC69E /* GoalScene.m */; };
 		8FA9D7BD1992D36C009958A4 /* SuccessScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA9D7BC1992D36C009958A4 /* SuccessScene.m */; };
 		8FA9D7C51993E2F0009958A4 /* EndScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA9D7C41993E2F0009958A4 /* EndScene.m */; };
 		8FABDAA7197844C9008E3D3F /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FABDAA6197844C9008E3D3F /* Gameplay.m */; };
@@ -81,6 +83,10 @@
 		8F0B0882197491F9007FDD44 /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = Source/Vertex.h; sourceTree = "<group>"; };
 		8FA760EA198FF48900817947 /* ColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorSelector.h; path = Source/ColorSelector.h; sourceTree = "<group>"; };
 		8FA760EB198FF48900817947 /* ColorSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorSelector.m; path = Source/ColorSelector.m; sourceTree = "<group>"; };
+		8FA85A4419993D88003DC69E /* WelcomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeScene.h; path = Source/WelcomeScene.h; sourceTree = "<group>"; };
+		8FA85A4519993D88003DC69E /* WelcomeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeScene.m; path = Source/WelcomeScene.m; sourceTree = "<group>"; };
+		8FA85A4819993E75003DC69E /* GoalScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoalScene.h; path = Source/GoalScene.h; sourceTree = "<group>"; };
+		8FA85A4919993E75003DC69E /* GoalScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoalScene.m; path = Source/GoalScene.m; sourceTree = "<group>"; };
 		8FA9D7BB1992D36C009958A4 /* SuccessScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuccessScene.h; path = Source/SuccessScene.h; sourceTree = "<group>"; };
 		8FA9D7BC1992D36C009958A4 /* SuccessScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuccessScene.m; path = Source/SuccessScene.m; sourceTree = "<group>"; };
 		8FA9D7C31993E2F0009958A4 /* EndScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EndScene.h; path = Source/EndScene.h; sourceTree = "<group>"; };
@@ -224,6 +230,10 @@
 				8F0B087F197491D5007FDD44 /* Vertex.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
+				8FA85A4419993D88003DC69E /* WelcomeScene.h */,
+				8FA85A4519993D88003DC69E /* WelcomeScene.m */,
+				8FA85A4819993E75003DC69E /* GoalScene.h */,
+				8FA85A4919993E75003DC69E /* GoalScene.m */,
 				8FABDAA5197844C9008E3D3F /* Gameplay.h */,
 				8FABDAA6197844C9008E3D3F /* Gameplay.m */,
 				8FA9D7BB1992D36C009958A4 /* SuccessScene.h */,
@@ -460,7 +470,9 @@
 				8F0B0880197491D5007FDD44 /* Vertex.m in Sources */,
 				8FA9D7BD1992D36C009958A4 /* SuccessScene.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
+				8FA85A4619993D88003DC69E /* WelcomeScene.m in Sources */,
 				8FAEE464199145B3001105B8 /* HTPressableButtonPrefs.m in Sources */,
+				8FA85A4A19993E75003DC69E /* GoalScene.m in Sources */,
 				8FAEE466199145B3001105B8 /* UIImage+HTButton.m in Sources */,
 				8FAEE465199145B3001105B8 /* UIColor+HTColor.m in Sources */,
 				8FAEE463199145B3001105B8 /* HTPressableButton.m in Sources */,

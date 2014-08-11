@@ -25,7 +25,7 @@
     ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: 1 green: .941 blue: .647];
     
     CCLabelTTF *message;
-    message = [[CCLabelTTF alloc] initWithString:@"Welcome!" fontName: @"Papyrus" fontSize:25];
+    message = [[CCLabelTTF alloc] initWithString:@"Color The Corners" fontName: @"Papyrus" fontSize:40];
     [message setPosition: CGPointMake([thisDirector viewSize].width/2, [thisDirector viewSize].height/2)];
     [self addChild:message];
 }
@@ -55,8 +55,18 @@
 }
 
 - (void)play {
-    CCScene *gameplayScene = [CCBReader loadAsScene:@"Gameplay"];
-    [[CCDirector sharedDirector] replaceScene:gameplayScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionUp duration:1]];
+    NSNumber *currentLevel = [[NSUserDefaults standardUserDefaults] objectForKey:@"userLevel"];
+    CCScene *gameplayScene;
+    CCTransition *transition;
+    if ([currentLevel intValue] == 1){
+        gameplayScene = [CCBReader loadAsScene:@"WelcomeScene"];
+        transition = [CCTransition transitionCrossFadeWithDuration:0.5f];
+    }
+    else{
+        gameplayScene = [CCBReader loadAsScene:@"Gameplay"];
+        transition = [CCTransition transitionPushWithDirection:CCTransitionDirectionUp duration:1];
+    }
+    [[CCDirector sharedDirector] replaceScene:gameplayScene withTransition: transition];
     [playButton removeFromSuperview];
     [resetButton removeFromSuperview];
 }
