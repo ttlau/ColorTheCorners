@@ -405,23 +405,6 @@
     return (touch.x >= minX && touch.x <= maxX && touch.y >= minY && touch.y <= maxY);
 }
 
-/* attempt at drawing circles
-- (void)drawRect:(CGRect)rect {
-    
-        CGContextRef context = UIGraphicsGetCurrentContext();
-    
-        CGContextSetLineWidth(context, 2.0);
-    
-        CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
-        CGRect rectangle = CGRectMake(60,170,200,80);
-    
-        CGContextAddEllipseInRect(context, rectangle);
-    
-        CGContextStrokePath(context);
-}
-*/
-
-
 // colors are equal only when RGBA of both colors are equal
 - (Boolean)checkColorEquality : (CCColor*)colorOne and: (CCColor*)colorTwo{
     if (colorOne.red != colorTwo.red){
@@ -496,31 +479,6 @@
 
 -(void)removeColorFlash{
     [self removeChild:flashView];
-}
-
--(void)blinkText{
-    
-    BOOL blinkStatus = NO;
-                      [NSTimer
-                      scheduledTimerWithTimeInterval:(NSTimeInterval)(0.5)
-                      target:self
-                      selector:@selector(blink:)
-                      userInfo:[NSNumber numberWithBool:blinkStatus]
-                      repeats:TRUE];
-}
-
--(void)blink:(NSTimer*)timer{
-    NSNumber* userInfo = (NSNumber*)timer.userInfo;
-    BOOL blinkStatus = [userInfo boolValue];
-    
-    
-    if(blinkStatus == NO){
-        tutorialText.color = [CCColor blackColor];
-        blinkStatus = YES;
-    }else {
-        tutorialText.color = [CCColor whiteColor];
-        blinkStatus = NO;
-    }
 }
 
 @end
