@@ -26,8 +26,6 @@
     NSMutableArray *_listOfVertices;
     NSMutableArray *colors;
     
-    CCDrawNode *_static;
-    
     int numOfColors;
     CCColor *currentColor;
     
@@ -55,11 +53,6 @@
     
     // tell this scene to accept touches
     self.userInteractionEnabled = TRUE;
-    
-    //initializing static draw node
-    _static = [[CCDrawNode alloc]init];
-    _static.position = (ccp(0,0));
-    [self addChild:_static];
     
     //set the points to number of colors left
     //_scoreLabel.string = [NSString stringWithFormat:@"%d", points];
@@ -118,18 +111,17 @@
         s.tag = tagNumber;
         s.color = [CCColor blackColor];
         s.isConnected = FALSE;
-        s.visible = FALSE;
+        // s.visible = FALSE;
+        s.color = [CCColor blackColor];
+        [s setZOrder:99];
         
-        // draw the dot
-        [map drawDot:s.position radius:20 color:[CCColor blackColor]];
-        [map setZOrder: 99];
         
-        // demonstrate number in array
-        CCLabelTTF *tagString;
-        tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:15];
-        [tagString setPosition: s.positionInPoints];
-        [_levelNode addChild:tagString];
-        tagNumber++;
+//        // demonstrate number in array
+//        CCLabelTTF *tagString;
+//        tagString = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%d", tagNumber] fontName: @"Helvetica" fontSize:15];
+//        [tagString setPosition: s.positionInPoints];
+//        [_levelNode addChild:tagString];
+          tagNumber++;
         
         // add to list of vertices
         [_listOfVertices addObject: s];
@@ -182,9 +174,9 @@
     //numOfColors = 10;
     
     // set properties of the dots and add them to the layout box
-    for (int i = 1; i <= numOfColors; i++){
+    for (int i = 0; i < numOfColors; i++){
         ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
-        c.color = possibleColors[i-1];
+        c.color = possibleColors[i];
         [c setScale: 1.0];
         c.visible = TRUE;
         c.used = FALSE;
@@ -268,8 +260,14 @@
                 if (userLevel == 1 && [self checkColorEquality:currentColor and:[CCColor redColor]] && numVerticesColored == 0){
                     tutorialText.visible = FALSE;
                     [tutorialText setString: @"Place it here!"];
-                    tutorialText.position = [_contentNode convertToWorldSpace:((Vertex*)_listOfVertices[0]).position];
+                    
+                    
+                    tutorialText.position = ccp(((Vertex*)_listOfVertices[0]).positionInPoints.x + 77.5, ((Vertex*)_listOfVertices[0]).positionInPoints.y - 25);
                     tutorialText.visible = TRUE;
+                    
+                    // blink the proper vertex
+                    id blinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
+                    [(Vertex*)_listOfVertices[0] runAction:[CCActionSequence actions:blinkAction,nil]];
                 }
                 
                 break;
@@ -284,7 +282,7 @@
         {
             double distanceToVertex = [self distanceBetweenPoint:[_contentNode convertToWorldSpace:v.position] andPoint:touchLoc];
         
-            if (distanceToVertex < 15){
+            if (distanceToVertex < v.contentSize.height){
             
                 // if current color is not equal to the vertex color (prevent extraneous dots being created)
                 if (![self checkColorEquality:currentColor and: v.color]) {
@@ -297,7 +295,6 @@
                 
                  
                     // drawing the dot and setting the invisible vertex color
-                    [_static drawDot:v.position radius:20 color:currentColor];
                     v.color = currentColor;
                     
                     // tutorial
@@ -309,9 +306,16 @@
                             tutorialText.position = ccp([[CCDirector sharedDirector]viewSize].width/2, [[CCDirector sharedDirector]viewSize].height/2);
                             tutorialText.horizontalAlignment = CCTextAlignmentCenter;
                             tutorialText.visible = TRUE;
+                            
+                            // blink the vertices that tutorial is referring to
+                            //[(Vertex*)_listOfVertices[0] stopAction:blinkAction];
+                            id blinkAction = [CCActionBlink actionWithDuration:10 blinks:10];
+                            id secondBlinkAction = [CCActionBlink actionWithDuration:10 blinks:10];
+                            [(Vertex*)_listOfVertices[1] runAction:[CCActionSequence actions:blinkAction,nil]];
+                            [(Vertex*)_listOfVertices[2] runAction:[CCActionSequence actions:secondBlinkAction,nil]];
+
                         }
                         else if (v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
-                            [_static drawDot:v.position radius:20 color:[CCColor blackColor]];
                             v.color = [CCColor blackColor];
                             numVerticesColored--;
                         }

@@ -92,8 +92,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.25</real>
-									<real>0.25</real>
+									<real>1</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -154,8 +154,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.25</real>
-									<real>0.25</real>
+									<real>1</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -216,8 +216,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.25</real>
-									<real>0.25</real>
+									<real>1</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -278,8 +278,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.25</real>
-									<real>0.25</real>
+									<real>1</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>
@@ -340,8 +340,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>0.25</real>
-									<real>0.25</real>
+									<real>1</real>
+									<real>1</real>
 									<false/>
 									<integer>0</integer>
 								</array>

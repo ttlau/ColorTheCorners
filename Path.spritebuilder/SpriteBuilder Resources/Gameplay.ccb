@@ -384,11 +384,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>50.5</real>
-							<real>290</real>
+							<real>0.088908448815345764</real>
+							<real>0.90625</real>
 							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -479,7 +479,20 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonNormal.png</string>
+							<string>Images/ColorSelectorHighlighter.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundColor|Normal</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<real>0.59773582220077515</real>
+							<real>0.8262408971786499</real>
+							<real>1</real>
+							<real>1</real>
 						</array>
 					</dict>
 					<dict>
@@ -713,10 +726,10 @@
 						<key>value</key>
 						<array>
 							<real>515</real>
-							<real>290</real>
+							<real>0.90625</real>
 							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>1</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -807,7 +820,20 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonNormal.png</string>
+							<string>Images/ColorSelectorHighlighter.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundColor|Normal</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<real>0.58325845003128052</real>
+							<real>0.85586071014404297</real>
+							<real>1</real>
+							<real>1</real>
 						</array>
 					</dict>
 					<dict>
@@ -1144,7 +1170,7 @@
 			<key>name</key>
 			<string>Default Timeline</string>
 			<key>offset</key>
-			<real>2.34375</real>
+			<real>4.6875</real>
 			<key>position</key>
 			<real>0.0</real>
 			<key>resolution</key>
