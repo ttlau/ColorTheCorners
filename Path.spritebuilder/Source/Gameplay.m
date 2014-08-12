@@ -5,7 +5,7 @@
 //  Created by Tim Lau on 7/14/14.
 //  Copyright (c) 2014 Apportable. All rights reserved.
 // TODO: tutorials - bigger text, placement, call to action (now you finish!), the actual goal in the beginning, animations
-// ask - transparent flashing screen, and blinking text
+// ask - transparent flashing screen, and rounded buttons, and z order of vertices
 //
 
 #import "Gameplay.h"
@@ -94,14 +94,9 @@
 #pragma mark populate list of vertices
     
     CCNode *_levelNodeChild = [_levelNode.children objectAtIndex:0];
-    CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:0];
+    CCNode *_listOfSprites = [_levelNodeChild.children objectAtIndex:1];
     
-    // create dots
-    CCDrawNode *map;
-    map = [[CCDrawNode alloc]init];
-    map.position = (ccp(0,0));
-    [self addChild:map];
-    
+
     // for tag numbers
     int tagNumber = 0;
     
@@ -135,6 +130,13 @@
     NSDictionary *levelProperties = [levels objectForKey:[NSString stringWithFormat:@"Level%d", [currentLevel intValue]]];
     NSArray *edges = [levelProperties objectForKey:@"Edges"];
     
+    
+    // create dots
+    CCDrawNode *map;
+    map = [[CCDrawNode alloc]init];
+    map.position = (ccp(0,0));
+    CCNode *_lineNode = [_levelNodeChild.children objectAtIndex:0];
+    [_lineNode addChild:map];
     
     int index = 0;
     int secondIndex = 0;
@@ -197,7 +199,7 @@
     highlighter = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelectorHighlighter.png"];
     highlighter.color = [CCColor colorWithRed:.82 green: .859 blue: .741];
     highlighter.contentSize = CGSizeMake(firstSelector.contentSize.width, firstSelector.contentSize.height);
-    highlighter.anchorPoint = ccp(0.5, 0.5);
+    highlighter.anchorPoint = ccp(0.575, 0.575);
     highlighter.position = firstSelector.positionInPoints;
     [firstSelector addChild: highlighter z: firstSelector.zOrder-1];
     
