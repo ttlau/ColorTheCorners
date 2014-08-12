@@ -25,8 +25,8 @@
     ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: 1 green: .941 blue: .647];
     
     CCLabelTTF *message;
-    message = [[CCLabelTTF alloc] initWithString:@"Color The Corners" fontName: @"HelveticaNeue-UltraLight" fontSize:40];
-    [message setPosition: CGPointMake([thisDirector viewSize].width/2, [thisDirector viewSize].height/2)];
+    message = [[CCLabelTTF alloc] initWithString:@"Color The Corners" fontName: @"HelveticaNeue-UltraLight" fontSize:60];
+    [message setPosition: CGPointMake([thisDirector viewSize].width/2, [thisDirector viewSize].height/4*3)];
     [self addChild:message];
 }
 
@@ -36,14 +36,14 @@
     
     CCDirector *thisDirector = [CCDirector sharedDirector];
     //note: for the x coordinate, take the width of the button + displacement from side and then minus width
-    CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 37.5, [thisDirector viewSize].height/2 + 47.5, 75, 35);
+    CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 5, 112.5, 55);
     playButton = [[HTPressableButton alloc] initWithFrame:frame2 buttonStyle:HTPressableButtonStyleRounded];
     [playButton setTitle:@"Play" forState:UIControlStateNormal];
     playButton.buttonColor = [UIColor ht_sunflowerColor];
     playButton.shadowColor = [UIColor ht_citrusColor];
     [playButton addTarget:self action:@selector(play) forControlEvents:UIControlEventTouchUpInside];
     
-    CGRect frame3 = CGRectMake([thisDirector viewSize].width/2 - 37.5, [thisDirector viewSize].height/2 + 87.5, 75, 35);
+    CGRect frame3 = CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 73.5, 112.5, 55);
     resetButton = [[HTPressableButton alloc] initWithFrame:frame3 buttonStyle:HTPressableButtonStyleRounded];
     [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
     resetButton.buttonColor = [UIColor ht_sunflowerColor];

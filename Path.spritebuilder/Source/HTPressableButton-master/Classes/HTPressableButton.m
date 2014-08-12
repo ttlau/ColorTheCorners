@@ -180,7 +180,7 @@
 - (void) createButton
 {
     // was Avenir font
-    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:18]];
+    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:25]];
     
     UIImage *buttonNormal;
     UIImage *buttonHighlighted;

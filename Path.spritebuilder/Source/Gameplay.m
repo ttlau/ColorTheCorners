@@ -214,7 +214,12 @@
     colorBox.position = ccp([thisDirector viewSize].width/2.0, 50.0);
     
     // set the first color to the clearColor
-    currentColor = [CCColor clearColor];
+    if (userLevel == 1){
+        currentColor = [CCColor clearColor];
+    }
+    else {
+        currentColor = ((ColorSelector*)colors[0]).color;
+    }
     
 #pragma mark buttons
     
@@ -316,7 +321,7 @@
                     }
                     
                     // flashes screen
-                   flashView = [[CCNodeColor alloc]initWithColor: [currentColor colorWithAlphaComponent:0.3f] width:[[CCDirector sharedDirector]viewSize].width height: [[CCDirector sharedDirector]viewSize].height];
+                   flashView = [[CCNodeColor alloc]initWithColor: [currentColor colorWithAlphaComponent:0.25f] width:[[CCDirector sharedDirector]viewSize].width height: [[CCDirector sharedDirector]viewSize].height];
                     flashView.position = ccp(0,0);
                     [self addChild:flashView];
                                       [NSTimer
@@ -474,7 +479,7 @@
 -(void)presentWelcome{
     
     tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"HelveticaNeue-UltraLight" fontSize:25];
-    [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-40)];
+    [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-30)];
     [self addChild:tutorialText];
 }
 
