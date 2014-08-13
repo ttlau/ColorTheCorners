@@ -19,16 +19,21 @@
 -(void)onEnterTransitionDidFinish{
     [super onEnterTransitionDidFinish];
     
-    [NSTimer scheduledTimerWithTimeInterval:2.5
+    self.userInteractionEnabled = FALSE;
+    [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self
-                                   selector:@selector(nextScreen:)
+                                   selector:@selector(enableTouch:)
                                    userInfo:nil
                                     repeats:NO];
 }
 
--(void)nextScreen: (NSTimer*)timer{
+-(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event{
     CCScene *gameplayScene = [CCBReader loadAsScene:@"GoalScene"];
     [[CCDirector sharedDirector] replaceScene:gameplayScene withTransition: [CCTransition transitionCrossFadeWithDuration:.5]];
+}
+
+-(void)enableTouch: (NSTimer*)timer{
+    self.userInteractionEnabled = TRUE;
     
 }
 

@@ -25,7 +25,7 @@
     ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: 1 green: .941 blue: .647];
     
     CCLabelTTF *message;
-    message = [[CCLabelTTF alloc] initWithString:@"Color The Corners" fontName: @"HelveticaNeue-UltraLight" fontSize:60];
+    message = [[CCLabelTTF alloc] initWithString:@"Color The Corners" fontName: @"HelveticaNeue-Light" fontSize:60];
     [message setPosition: CGPointMake([thisDirector viewSize].width/2, [thisDirector viewSize].height/4*3)];
     [self addChild:message];
 }

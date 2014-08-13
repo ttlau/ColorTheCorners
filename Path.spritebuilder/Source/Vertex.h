@@ -15,6 +15,8 @@
 
 @property (nonatomic, assign) int tag;
 @property (nonatomic, assign) BOOL isConnected;
+@property (nonatomic, assign) BOOL isFlashing;
 @property (nonatomic, retain) NSSet *linkedNodes;
+-(void)pulse;
 
 @end

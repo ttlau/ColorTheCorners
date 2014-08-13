@@ -19,7 +19,6 @@
     
     CCNode *_levelNode;
     CCNode *_contentNode;
-    CCLabelTTF *_scoreLabel;
     CCLabelTTF *tutorialText;
     
     
@@ -28,8 +27,6 @@
     
     int numOfColors;
     CCColor *currentColor;
-    
-    CCButton *_submit;
     
     CCLayoutBox *colorBox;
     
@@ -44,6 +41,8 @@
     int userLevel;
     
     CCNodeColor *flashView;
+    
+    CCActionBlink *blinkAction;
     
 }
 
@@ -259,6 +258,7 @@
             
                 [highlighter runAction:[CCActionSequence actions:moveAction,nil]];
                 
+#pragma mark tutorial stuff
                 if (userLevel == 1){
                     if ([self checkColorEquality:currentColor and:[CCColor redColor]] && numVerticesColored == 0){
                     tutorialText.visible = FALSE;
@@ -268,9 +268,10 @@
                         tutorialText.position = ccp(((Vertex*)_listOfVertices[0]).positionInPoints.x + 77.5, ((Vertex*)_listOfVertices[0]).positionInPoints.y - 25);
                         tutorialText.visible = TRUE;
                     
-                        // blink the proper vertex
-                        id blinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
-                        [(Vertex*)_listOfVertices[0] runAction:[CCActionSequence actions:blinkAction,nil]];
+                        // pulse the correct vertex
+                        ((Vertex*)_listOfVertices[0]).isFlashing = TRUE;
+                        [((Vertex*)_listOfVertices[0]) pulse];
+
                     }
                     else if ([self checkColorEquality:currentColor and:[CCColor orangeColor]] && numVerticesColored == 1){
                     
@@ -282,8 +283,9 @@
                         tutorialText.visible = TRUE;
                     
                         // blink the proper vertex
-                        id blinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
-                        [(Vertex*)_listOfVertices[1] runAction:[CCActionSequence actions:blinkAction,nil]];
+                        ((Vertex*)_listOfVertices[1]).isFlashing = TRUE;
+                        [((Vertex*)_listOfVertices[1]) pulse];
+                        
                     }
                     else if(numVerticesColored == 2){
                         tutorialText.visible = FALSE;
@@ -317,9 +319,13 @@
                     // drawing the dot and setting the invisible vertex color
                     v.color = currentColor;
                     
-                    // tutorial
+#pragma mark tutorial
                     if (userLevel == 1){
-                        if (v.tag == ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
+                        if (v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
+                            v.color = [CCColor blackColor];
+                            numVerticesColored--;
+                        }
+                        else if (v.tag == ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
                             tutorialText.visible = FALSE;
                             [tutorialText setString: [NSString stringWithFormat:@"%@\r%@\r%@", @"Now that this dot is red",@"The two dots connected to it", @"can't be red!"]];
                             tutorialText.anchorPoint = ccp(0.5, 0.5);
@@ -328,24 +334,19 @@
                             tutorialText.visible = TRUE;
                             
                             // blink the vertices that tutorial is referring to
-                            //[(Vertex*)_listOfVertices[0] stopAction:blinkAction];
-                            id blinkAction = [CCActionBlink actionWithDuration:3 blinks:6];
-                            id secondBlinkAction = [CCActionBlink actionWithDuration:3 blinks:6];
-                            [(Vertex*)_listOfVertices[1] runAction:[CCActionSequence actions:blinkAction,nil]];
+                            id firstBlinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
+                            id secondBlinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
+                            [(Vertex*)_listOfVertices[1] runAction:[CCActionSequence actions:firstBlinkAction,nil]];
                             [(Vertex*)_listOfVertices[2] runAction:[CCActionSequence actions:secondBlinkAction,nil]];
                             
                             self.userInteractionEnabled = FALSE;
                             [NSTimer
-                             scheduledTimerWithTimeInterval:(NSTimeInterval)(3.5)
+                             scheduledTimerWithTimeInterval:(NSTimeInterval)(5)
                              target:self
                              selector:@selector(presentChooseOrangeText: )
                              userInfo:nil
                              repeats:false];
 
-                        }
-                        else if (v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
-                            v.color = [CCColor blackColor];
-                            numVerticesColored--;
                         }
                         else if (numVerticesColored == 2){
                             tutorialText.visible = FALSE;
@@ -357,7 +358,7 @@
                         }
                     }
                     
-                    // flashes screen
+#pragma mark flashes screen
                    flashView = [[CCNodeColor alloc]initWithColor: [currentColor colorWithAlphaComponent:0.25f] width:[[CCDirector sharedDirector]viewSize].width height: [[CCDirector sharedDirector]viewSize].height];
                     flashView.position = ccp(0,0);
                     [self addChild:flashView];
@@ -459,9 +460,6 @@
     if(colorOne.blue != colorTwo.blue){
         return false;
     }
-    if(colorOne.alpha != colorTwo.alpha){
-        return false;
-    }
     return true;
 }
 
@@ -511,11 +509,22 @@
     return TRUE;
 }
 
+-(void)tutorialCheck: (Vertex*)v{
+    CCColor *colorToCheckAgainst = v.color;
+    NSSet *currentNodeNeighbors = v.linkedNodes;
+    for (Vertex* neighbors in currentNodeNeighbors){
+        if ([self checkColorEquality:colorToCheckAgainst and:neighbors.color]){
+            
+        }
+    }
+    
+}
+
 #pragma mark tutorial 
 
 -(void)presentWelcome{
     
-    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"HelveticaNeue-UltraLight" fontSize:25];
+    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"HelveticaNeue-Light" fontSize:25];
     [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-30)];
     [self addChild:tutorialText];
 }
@@ -525,6 +534,10 @@
     [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-30)];
     [tutorialText setString:@"So, let's choose orange!"];
     tutorialText.visible = TRUE;
+    self.userInteractionEnabled = TRUE;
+}
+
+-(void)enableUserTouchAgain: (NSTimer*) timer{
     self.userInteractionEnabled = TRUE;
 }
 

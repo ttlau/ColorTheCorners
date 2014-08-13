@@ -16,17 +16,22 @@
     ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: 1 green: .941 blue: .647];
     
     
-    [NSTimer scheduledTimerWithTimeInterval:5.0
+    self.userInteractionEnabled = FALSE;
+    [NSTimer scheduledTimerWithTimeInterval:3.0
                                      target:self
-                                   selector:@selector(nextScreen:)
+                                   selector:@selector(enableTouch:)
                                    userInfo:nil
                                     repeats:NO];
 }
 
--(void)nextScreen: (NSTimer*)timer{
+-(void)enableTouch: (NSTimer*)timer{
+    self.userInteractionEnabled = TRUE;
+    
+}
+
+-(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event{
     CCScene *gameplayScene = [CCBReader loadAsScene:@"Gameplay"];
     [[CCDirector sharedDirector] replaceScene:gameplayScene withTransition: [CCTransition transitionCrossFadeWithDuration:.5]];
-    
 }
 
 @end

@@ -225,7 +225,7 @@
 						<key>value</key>
 						<array>
 							<string>Color the Dots
-So that no Two Connected Dots 
+So that No Two Connected Dots 
 Are the Same Color!</string>
 							<false/>
 						</array>
@@ -236,7 +236,7 @@ Are the Same Color!</string>
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>HelveticaNeue-UltraLight</string>
+						<string>HelveticaNeue-Light</string>
 					</dict>
 					<dict>
 						<key>name</key>
