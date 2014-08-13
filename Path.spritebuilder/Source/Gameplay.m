@@ -259,17 +259,35 @@
             
                 [highlighter runAction:[CCActionSequence actions:moveAction,nil]];
                 
-                if (userLevel == 1 && [self checkColorEquality:currentColor and:[CCColor redColor]] && numVerticesColored == 0){
+                if (userLevel == 1){
+                    if ([self checkColorEquality:currentColor and:[CCColor redColor]] && numVerticesColored == 0){
                     tutorialText.visible = FALSE;
-                    [tutorialText setString: @"Place it here!"];
+                        [tutorialText setString: @"Place it here!"];
                     
                     
-                    tutorialText.position = ccp(((Vertex*)_listOfVertices[0]).positionInPoints.x + 77.5, ((Vertex*)_listOfVertices[0]).positionInPoints.y - 25);
-                    tutorialText.visible = TRUE;
+                        tutorialText.position = ccp(((Vertex*)_listOfVertices[0]).positionInPoints.x + 77.5, ((Vertex*)_listOfVertices[0]).positionInPoints.y - 25);
+                        tutorialText.visible = TRUE;
                     
-                    // blink the proper vertex
-                    id blinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
-                    [(Vertex*)_listOfVertices[0] runAction:[CCActionSequence actions:blinkAction,nil]];
+                        // blink the proper vertex
+                        id blinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
+                        [(Vertex*)_listOfVertices[0] runAction:[CCActionSequence actions:blinkAction,nil]];
+                    }
+                    else if ([self checkColorEquality:currentColor and:[CCColor orangeColor]] && numVerticesColored == 1){
+                    
+                        tutorialText.visible = FALSE;
+                        [tutorialText setString: @"Place it here!"];
+                    
+                    
+                        tutorialText.position = ccp(((Vertex*)_listOfVertices[1]).positionInPoints.x - 77.5, ((Vertex*)_listOfVertices[0]).positionInPoints.y - 25);
+                        tutorialText.visible = TRUE;
+                    
+                        // blink the proper vertex
+                        id blinkAction = [CCActionBlink actionWithDuration:5 blinks:5];
+                        [(Vertex*)_listOfVertices[1] runAction:[CCActionSequence actions:blinkAction,nil]];
+                    }
+                    else if(numVerticesColored == 2){
+                        tutorialText.visible = FALSE;
+                    }
                 }
                 
                 break;
@@ -311,18 +329,31 @@
                             
                             // blink the vertices that tutorial is referring to
                             //[(Vertex*)_listOfVertices[0] stopAction:blinkAction];
-                            id blinkAction = [CCActionBlink actionWithDuration:10 blinks:10];
-                            id secondBlinkAction = [CCActionBlink actionWithDuration:10 blinks:10];
+                            id blinkAction = [CCActionBlink actionWithDuration:3 blinks:6];
+                            id secondBlinkAction = [CCActionBlink actionWithDuration:3 blinks:6];
                             [(Vertex*)_listOfVertices[1] runAction:[CCActionSequence actions:blinkAction,nil]];
                             [(Vertex*)_listOfVertices[2] runAction:[CCActionSequence actions:secondBlinkAction,nil]];
+                            
+                            self.userInteractionEnabled = FALSE;
+                            [NSTimer
+                             scheduledTimerWithTimeInterval:(NSTimeInterval)(3.5)
+                             target:self
+                             selector:@selector(presentChooseOrangeText: )
+                             userInfo:nil
+                             repeats:false];
 
                         }
                         else if (v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
                             v.color = [CCColor blackColor];
                             numVerticesColored--;
                         }
-                        else if (numVerticesColored > 1){
+                        else if (numVerticesColored == 2){
                             tutorialText.visible = FALSE;
+                            [tutorialText setString:@"Now you finish the puzzle!"];
+                            tutorialText.anchorPoint = ccp(0.5, 0.5);
+                            tutorialText.position = ccp([[CCDirector sharedDirector]viewSize].width/2, [[CCDirector sharedDirector]viewSize].height/2);
+                            tutorialText.horizontalAlignment = CCTextAlignmentCenter;
+                            tutorialText.visible = TRUE;
                         }
                     }
                     
@@ -487,6 +518,14 @@
     tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"HelveticaNeue-UltraLight" fontSize:25];
     [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-30)];
     [self addChild:tutorialText];
+}
+
+-(void)presentChooseOrangeText: (NSTimer*)timer{
+    tutorialText.visible = FALSE;
+    [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-30)];
+    [tutorialText setString:@"So, let's choose orange!"];
+    tutorialText.visible = TRUE;
+    self.userInteractionEnabled = TRUE;
 }
 
 -(void)removeColorFlash{
