@@ -374,6 +374,10 @@
                     {
                         [self submit];
                     }
+                    else if (userLevel == 1 && numVerticesColored > 2)
+                    {
+                        [self tutorialCheck:v];
+                    }
                     break;
                 }
             }
@@ -514,13 +518,25 @@
     NSSet *currentNodeNeighbors = v.linkedNodes;
     for (Vertex* neighbors in currentNodeNeighbors){
         if ([self checkColorEquality:colorToCheckAgainst and:neighbors.color]){
+            tutorialText.visible = FALSE;
+            [tutorialText setString:[NSString stringWithFormat:@"%@\r%@\r%@", @"Remember!",@"Connected dots cannot be", @"The same color!"]];
+            tutorialText.anchorPoint = ccp(0.5, 0.5);
+            tutorialText.position = ccp([[CCDirector sharedDirector]viewSize].width/2, [[CCDirector sharedDirector]viewSize].height/2);
+            tutorialText.horizontalAlignment = CCTextAlignmentCenter;
+            tutorialText.visible = TRUE;
+            [NSTimer
+             scheduledTimerWithTimeInterval:(NSTimeInterval)(2)
+             target:self
+             selector:@selector(textInvisible: )
+             userInfo:nil
+             repeats:false];
             
         }
     }
     
 }
 
-#pragma mark tutorial 
+#pragma mark tutorial
 
 -(void)presentWelcome{
     
@@ -537,8 +553,8 @@
     self.userInteractionEnabled = TRUE;
 }
 
--(void)enableUserTouchAgain: (NSTimer*) timer{
-    self.userInteractionEnabled = TRUE;
+-(void)textInvisible: (NSTimer*)timer{
+    tutorialText.visible = FALSE;
 }
 
 -(void)removeColorFlash{
