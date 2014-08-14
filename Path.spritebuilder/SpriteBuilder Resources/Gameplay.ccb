@@ -163,9 +163,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.33525562286376953</real>
-							<real>0.69203823804855347</real>
 							<real>1</real>
+							<real>0.45490112900733948</real>
+							<real>0.67663031816482544</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -189,8 +189,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.0</real>
-							<real>-1</real>
+							<real>1</real>
+							<real>1</real>
 						</array>
 					</dict>
 				</array>
@@ -364,7 +364,7 @@
 				<key>displayName</key>
 				<string>CCButton</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>backButton</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -385,7 +385,7 @@
 						<key>value</key>
 						<array>
 							<real>0.088908448815345764</real>
-							<real>0.90625</real>
+							<real>0.90937501192092896</real>
 							<integer>0</integer>
 							<integer>2</integer>
 							<integer>2</integer>
@@ -479,7 +479,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/ColorSelectorHighlighter.png</string>
+							<string>Images/ColorSelector.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -716,7 +716,7 @@
 				<key>displayName</key>
 				<string>CCButton</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>clearButton</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -831,7 +831,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/ColorSelectorHighlighter.png</string>
+							<string>Images/ColorSelector.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1055,6 +1055,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

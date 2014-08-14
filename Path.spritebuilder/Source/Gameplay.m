@@ -105,9 +105,8 @@
         s.tag = tagNumber;
         s.color = [CCColor blackColor];
         s.isConnected = FALSE;
+        s.isFlashing = FALSE;
         // s.visible = FALSE;
-        s.color = [CCColor blackColor];
-        [s setZOrder:99];
         
         
 //        // demonstrate number in array
@@ -164,7 +163,7 @@
     }
 
 #pragma mark draw the color options
-    NSArray *possibleColors = @[[CCColor redColor], [CCColor orangeColor], [CCColor yellowColor], [CCColor greenColor], [CCColor blueColor], [CCColor purpleColor], [CCColor cyanColor], [CCColor magentaColor], [CCColor brownColor]];
+    NSArray *possibleColors = @[[CCColor colorWithUIColor: [UIColor ht_alizarinColor]], [CCColor colorWithUIColor: [UIColor ht_carrotColor]], [CCColor colorWithUIColor: [UIColor ht_sunflowerColor]], [CCColor colorWithUIColor: [UIColor ht_emeraldColor]], [CCColor colorWithUIColor: [UIColor ht_aquaColor]], [CCColor colorWithUIColor: [UIColor ht_amethystColor]], [CCColor colorWithUIColor: [UIColor ht_pinkRoseColor]], [CCColor colorWithUIColor: [UIColor ht_bitterSweetColor]], [CCColor colorWithUIColor: [UIColor ht_lemonColor]], [CCColor colorWithUIColor: [UIColor ht_grassColor]], [CCColor colorWithUIColor: [UIColor ht_jayColor]], [CCColor colorWithUIColor: [UIColor ht_lavenderColor]],];
     
     // create a layout box to group the color selectors together
     colorBox = [[CCLayoutBox alloc]init];
@@ -176,7 +175,7 @@
     // set properties of the dots and add them to the layout box
     for (int i = 0; i < numOfColors; i++){
         ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
-        c.color = possibleColors[(i+(userLevel-1)*numOfColors)%9];
+        c.color = possibleColors[(i+(userLevel-1)*numOfColors)%12];
         [c setScale: 1.0];
         c.visible = TRUE;
         c.used = FALSE;
@@ -216,18 +215,12 @@
 #pragma mark buttons
     
     // initialize the back button
-    backButton = [[CCButton alloc]init];
-    backButton.color = [[CCColor alloc] initWithUIColor:[UIColor ht_blueJeansColor]];
-    [backButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansDarkColor]] forState:CCControlStateHighlighted];
+    [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_blueJeansColor]] forState:CCControlStateNormal];
+    [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
     
-    //note: for the x coordinate, take the width of the button + displacement from side and then minus width
-    clearButton = [[CCButton alloc] init];
-    clearButton.color = [[CCColor alloc] initWithUIColor:[UIColor ht_blueJeansColor]];
-    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansDarkColor]] forState:CCControlStateHighlighted];
-
-    // add the CCButtons as children of the gameplay scene
-    [self addChild: backButton];
-    [self addChild:clearButton];
+    // initialize the back button
+    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansColor]] forState:CCControlStateNormal];
+    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
 
 #pragma mark making the level pretty
     
