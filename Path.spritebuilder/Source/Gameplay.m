@@ -172,12 +172,11 @@
     
     // from the plist, load the number of allowed colors
     numOfColors = [[levelProperties objectForKey:@"Colors"] intValue];
-    //numOfColors = 10;
     
     // set properties of the dots and add them to the layout box
     for (int i = 0; i < numOfColors; i++){
         ColorSelector *c = [[ColorSelector alloc]initWithImageNamed:@"Images/ColorSelector.png"];
-        c.color = possibleColors[i];
+        c.color = possibleColors[(i+(userLevel-1)*numOfColors)%9];
         [c setScale: 1.0];
         c.visible = TRUE;
         c.used = FALSE;
@@ -322,6 +321,10 @@
 #pragma mark tutorial
                     if (userLevel == 1){
                         if (v.tag != ((Vertex*)(_listOfVertices[0])).tag && numVerticesColored == 1){
+                            v.color = [CCColor blackColor];
+                            numVerticesColored--;
+                        }
+                        else if (v.tag != ((Vertex*)(_listOfVertices[1])).tag && numVerticesColored == 2){
                             v.color = [CCColor blackColor];
                             numVerticesColored--;
                         }

@@ -489,8 +489,8 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.59773582220077515</real>
-							<real>0.8262408971786499</real>
+							<real>0.12164140492677689</real>
+							<real>0.59121167659759521</real>
 							<real>1</real>
 							<real>1</real>
 						</array>
@@ -503,7 +503,20 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonHighlighted.png</string>
+							<string>Images/ColorSelectorHighlighter.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundColor|Highlighted</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<real>0.149550661444664</real>
+							<real>0.23842731118202209</real>
+							<real>0.94696575403213501</real>
+							<real>1</real>
 						</array>
 					</dict>
 					<dict>
@@ -828,8 +841,8 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.58325845003128052</real>
-							<real>0.85586071014404297</real>
+							<real>0.21491102874279022</real>
+							<real>0.54373008012771606</real>
 							<real>1</real>
 							<real>1</real>
 						</array>
@@ -842,7 +855,20 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonHighlighted.png</string>
+							<string>Images/ColorSelectorHighlighter.png</string>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>backgroundColor|Highlighted</string>
+						<key>type</key>
+						<string>Color3</string>
+						<key>value</key>
+						<array>
+							<real>0.15113595128059387</real>
+							<real>0.25096476078033447</real>
+							<real>0.94291365146636963</real>
+							<real>1</real>
 						</array>
 					</dict>
 					<dict>
