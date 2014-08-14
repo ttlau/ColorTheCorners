@@ -163,7 +163,7 @@
     }
 
 #pragma mark draw the color options
-    NSArray *possibleColors = @[[CCColor colorWithUIColor: [UIColor ht_alizarinColor]], [CCColor colorWithUIColor: [UIColor ht_carrotColor]], [CCColor colorWithUIColor: [UIColor ht_sunflowerColor]], [CCColor colorWithUIColor: [UIColor ht_emeraldColor]], [CCColor colorWithUIColor: [UIColor ht_aquaColor]], [CCColor colorWithUIColor: [UIColor ht_amethystColor]], [CCColor colorWithUIColor: [UIColor ht_pinkRoseColor]], [CCColor colorWithUIColor: [UIColor ht_bitterSweetColor]], [CCColor colorWithUIColor: [UIColor ht_lemonColor]], [CCColor colorWithUIColor: [UIColor ht_grassColor]], [CCColor colorWithUIColor: [UIColor ht_jayColor]], [CCColor colorWithUIColor: [UIColor ht_lavenderColor]],];
+    NSArray *possibleColors = @[[CCColor colorWithUIColor: [UIColor ht_alizarinColor]], [CCColor colorWithUIColor: [UIColor ht_carrotColor]], [CCColor colorWithUIColor: [UIColor ht_sunflowerColor]], [CCColor colorWithUIColor: [UIColor ht_emeraldColor]], [CCColor colorWithUIColor: [UIColor ht_blueJeansColor]], [CCColor colorWithUIColor: [UIColor ht_amethystColor]], [CCColor colorWithUIColor: [UIColor ht_pinkRoseColor]], [CCColor colorWithUIColor: [UIColor ht_bitterSweetColor]], [CCColor colorWithUIColor: [UIColor ht_lemonColor]], [CCColor colorWithUIColor: [UIColor ht_grassColor]], [CCColor colorWithUIColor: [UIColor ht_jayColor]], [CCColor colorWithUIColor: [UIColor ht_lavenderColor]],];
     
     // create a layout box to group the color selectors together
     colorBox = [[CCLayoutBox alloc]init];
@@ -215,11 +215,11 @@
 #pragma mark buttons
     
     // initialize the back button
-    [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_blueJeansColor]] forState:CCControlStateNormal];
+    [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_aquaColor]] forState:CCControlStateNormal];
     [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
     
     // initialize the back button
-    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_blueJeansColor]] forState:CCControlStateNormal];
+    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_aquaColor]] forState:CCControlStateNormal];
     [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
 
 #pragma mark making the level pretty
@@ -251,7 +251,7 @@
                 
 #pragma mark tutorial stuff
                 if (userLevel == 1){
-                    if ([self checkColorEquality:currentColor and:[CCColor redColor]] && numVerticesColored == 0){
+                    if ([self checkColorEquality:currentColor and:[CCColor colorWithUIColor: [UIColor ht_alizarinColor]]] && numVerticesColored == 0){
                     tutorialText.visible = FALSE;
                         [tutorialText setString: @"Place it here!"];
                     
@@ -264,7 +264,7 @@
                         [((Vertex*)_listOfVertices[0]) pulse];
 
                     }
-                    else if ([self checkColorEquality:currentColor and:[CCColor orangeColor]] && numVerticesColored == 1){
+                    else if ([self checkColorEquality:currentColor and:[CCColor colorWithUIColor: [UIColor ht_carrotColor]]] && numVerticesColored == 1){
                     
                         tutorialText.visible = FALSE;
                         [tutorialText setString: @"Place it here!"];
