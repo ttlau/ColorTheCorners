@@ -225,9 +225,8 @@
 #pragma mark making the level pretty
     
     // changing the background color
-    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed:.204 green:.596 blue:.859];
-    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: .161 green: .502 blue: .725];
-    
+    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed:.369 green:.765 blue:1];
+    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: .369 green: .714 blue: 1];
     
 }
 
