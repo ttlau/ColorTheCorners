@@ -236,7 +236,7 @@ Are the Same Color!</string>
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>HelveticaNeue-Light</string>
+						<string>ccbResources/alegreya-sans-sc.thin.ttf</string>
 					</dict>
 					<dict>
 						<key>name</key>

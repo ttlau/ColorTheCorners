@@ -194,7 +194,7 @@
     // make the color selector highlighter - basically tells which is current color being used
     ColorSelector *firstSelector = (ColorSelector*)colors[0];
     highlighter = [[CCSprite alloc]initWithImageNamed:@"Images/ColorSelectorHighlighter.png"];
-    highlighter.color = [CCColor colorWithRed:.82 green: .859 blue: .741];
+    highlighter.color = [CCColor colorWithRed:.941 green: 1 blue: .980];
     highlighter.contentSize = CGSizeMake(firstSelector.contentSize.width, firstSelector.contentSize.height);
     highlighter.anchorPoint = ccp(0.575, 0.575);
     highlighter.position = firstSelector.positionInPoints;
@@ -224,9 +224,12 @@
 
 #pragma mark making the level pretty
     
-    // changing the background color
-    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed:.369 green:.765 blue:1];
-    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: .369 green: .714 blue: 1];
+//    // changing the background color
+//    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed:.369 green:.765 blue:1];
+//    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: .369 green: .714 blue: 1];
+    
+    ((CCNodeGradient *)self.children[0]).startColor = [CCColor colorWithRed: .275 green: .537 blue: .4];
+    ((CCNodeGradient *)self.children[0]).endColor = [CCColor colorWithRed: 1 green: .941 blue: .647];
     
 }
 

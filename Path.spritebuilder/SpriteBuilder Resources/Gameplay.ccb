@@ -736,10 +736,10 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>515</real>
+							<real>0.90669012069702148</real>
 							<real>0.90625</real>
 							<integer>0</integer>
-							<integer>1</integer>
+							<integer>2</integer>
 							<integer>2</integer>
 						</array>
 					</dict>
