@@ -369,17 +369,19 @@
 #pragma mark flashes screen
                     
                     // prevent users from crashing the program by spamming the screen
-                    self.userInteractionEnabled = FALSE;
+                    if (userLevel != 1){
+                        self.userInteractionEnabled = FALSE;
                     
-                   flashView = [[CCNodeColor alloc]initWithColor: [currentColor colorWithAlphaComponent:0.25f] width:[[CCDirector sharedDirector]viewSize].width height: [[CCDirector sharedDirector]viewSize].height];
-                    flashView.position = ccp(0,0);
-                    [self addChild:flashView];
-                                      [NSTimer
+                        flashView = [[CCNodeColor alloc]initWithColor: [currentColor colorWithAlphaComponent:0.25f] width:[[CCDirector sharedDirector]viewSize].width height: [[CCDirector sharedDirector]viewSize].height];
+                        flashView.position = ccp(0,0);
+                        [self addChild:flashView];
+                                    [NSTimer
                                       scheduledTimerWithTimeInterval:(NSTimeInterval)(0.25)
                                       target:self
                                       selector:@selector(removeColorFlash)
                                       userInfo:nil
                                       repeats:false];
+                    }
                 
                     // only run bfs check when touching a vertex, so not in touchEnded
                     if (numVerticesColored == numOfVertices)

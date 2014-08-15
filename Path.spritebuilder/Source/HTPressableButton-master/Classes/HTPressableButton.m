@@ -182,7 +182,8 @@
 - (void) createButton
 {
     // was Avenir font
-    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:25]];
+    CGFloat fontSize = IS_PAD?50.0:25.0;
+    [self.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:fontSize]];
     
     UIImage *buttonNormal;
     UIImage *buttonHighlighted;

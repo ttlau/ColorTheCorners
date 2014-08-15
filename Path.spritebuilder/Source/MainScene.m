@@ -36,14 +36,16 @@
     
     CCDirector *thisDirector = [CCDirector sharedDirector];
     //note: for the x coordinate, take the width of the button + displacement from side and then minus width
-    CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 5, 112.5, 55);
-    playButton = [[HTPressableButton alloc] initWithFrame:frame2 buttonStyle:HTPressableButtonStyleRounded];
+    
+    //CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 5, 112.5, 55);
+    CGRect frame = IS_PAD?CGRectMake(512-100, 384, 225, 110):CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 5, 112.5, 55);
+    playButton = [[HTPressableButton alloc] initWithFrame:frame buttonStyle:HTPressableButtonStyleRounded];
     [playButton setTitle:@"Play" forState:UIControlStateNormal];
     playButton.buttonColor = [UIColor ht_sunflowerColor];
     playButton.shadowColor = [UIColor ht_citrusColor];
     [playButton addTarget:self action:@selector(play) forControlEvents:UIControlEventTouchUpInside];
     
-    CGRect frame3 = CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 73.5, 112.5, 55);
+    CGRect frame3 = IS_PAD?CGRectMake(512-100, 384+150, 225, 110):CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 73.5, 112.5, 55);
     resetButton = [[HTPressableButton alloc] initWithFrame:frame3 buttonStyle:HTPressableButtonStyleRounded];
     [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
     resetButton.buttonColor = [UIColor ht_sunflowerColor];

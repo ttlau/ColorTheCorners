@@ -35,14 +35,14 @@
     CCDirector *thisDirector = [CCDirector sharedDirector];
     
     //note: for the x coordinate, take the width of the button + displacement from side and then minus width
-    CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 87.5, [thisDirector viewSize].height/2 +75.5, 165, 55);
+    CGRect frame2 = IS_PAD?CGRectMake(512-100, 384+150, 225, 110):CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 73.5, 112.5, 55);
     homeButton = [[HTPressableButton alloc] initWithFrame:frame2 buttonStyle:HTPressableButtonStyleRounded];
     [homeButton setTitle:@"Home" forState:UIControlStateNormal];
     homeButton.buttonColor = [UIColor ht_sunflowerColor];
     homeButton.shadowColor = [UIColor ht_citrusColor];
     [homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     
-    CGRect frame3 = CGRectMake([thisDirector viewSize].width/2 - 87.5, [thisDirector viewSize].height/2 +5, 165, 55);
+    CGRect frame3 = IS_PAD?CGRectMake(512-135, 384, 300, 110):CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 5, 112.5, 55);
     learnMoreButton = [[HTPressableButton alloc] initWithFrame:frame3 buttonStyle:HTPressableButtonStyleRounded];
     [learnMoreButton setTitle:@"Learn More" forState:UIControlStateNormal];
     learnMoreButton.buttonColor = [UIColor ht_sunflowerColor];

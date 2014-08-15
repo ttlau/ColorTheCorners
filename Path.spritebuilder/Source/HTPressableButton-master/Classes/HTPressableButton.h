@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, HTPressableButtonStyle) {
  @warning You *must* specify the frame before choosing a button style
  */
 
+#define IS_PAD  (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+
 @interface HTPressableButton : UIButton
 
 /**

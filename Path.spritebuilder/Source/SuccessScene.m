@@ -36,7 +36,7 @@
     CCDirector *thisDirector = [CCDirector sharedDirector];
     
     //note: for the x coordinate, take the width of the button + displacement from side and then minus width
-    CGRect frame2 = CGRectMake([thisDirector viewSize].width/2 - 65, [thisDirector viewSize].height/2 + 25, 112.5, 55);
+    CGRect frame2 = IS_PAD?CGRectMake(512-100, 384+125, 225, 110):CGRectMake([thisDirector viewSize].width/2 - 65, [thisDirector viewSize].height/2 + 25, 112.5, 55);
     clearButton = [[HTPressableButton alloc] initWithFrame:frame2 buttonStyle:HTPressableButtonStyleRounded];
     [clearButton setTitle:@"Continue" forState:UIControlStateNormal];
     clearButton.buttonColor = [UIColor ht_sunflowerColor];
