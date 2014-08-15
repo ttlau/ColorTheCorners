@@ -11,6 +11,8 @@
 #import "UIColor+HTColor.h"
 #import "HTPressableButtonPrefs.h"
 
+#define IS_PAD  (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+
 @implementation HTPressableButton
 
 #pragma mark - Init

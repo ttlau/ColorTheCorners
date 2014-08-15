@@ -215,12 +215,12 @@
 #pragma mark buttons
     
     // initialize the back button
-    [backButton setBackgroundColor:[CCColor colorWithRed: .698 green:.412 blue: .561] forState:CCControlStateNormal];
-    [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
+    //[backButton setBackgroundColor:[CCColor colorWithRed: .698 green:.412 blue: .561] forState:CCControlStateNormal];
+    //[backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
     
     // initialize the back button
-    [clearButton setBackgroundColor:[CCColor colorWithRed: 698 green:.412 blue: .561] forState:CCControlStateNormal];
-    [clearButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
+    //[clearButton setBackgroundColor:[CCColor colorWithRed: 698 green:.412 blue: .561] forState:CCControlStateNormal];
+    //[clearButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
 
 #pragma mark making the level pretty
     
@@ -247,10 +247,20 @@
         
             // custom set, need to find a way to scale
             if(distanceToColor < c.contentSize.width/2){
+                
+                //prevent overshooting of color highlighter
+                self.userInteractionEnabled = FALSE;
+                
                 currentColor = c.color;
                 id moveAction = [CCActionMoveTo actionWithDuration:.5 position:c.positionInPoints];
             
                 [highlighter runAction:[CCActionSequence actions:moveAction,nil]];
+                [NSTimer
+                 scheduledTimerWithTimeInterval:(NSTimeInterval)(.5)
+                 target:self
+                 selector:@selector(enableTouch)
+                 userInfo:nil
+                 repeats:false];
                 
 #pragma mark tutorial stuff
                 if (userLevel == 1){
@@ -357,6 +367,10 @@
                     }
                     
 #pragma mark flashes screen
+                    
+                    // prevent users from crashing the program by spamming the screen
+                    self.userInteractionEnabled = FALSE;
+                    
                    flashView = [[CCNodeColor alloc]initWithColor: [currentColor colorWithAlphaComponent:0.25f] width:[[CCDirector sharedDirector]viewSize].width height: [[CCDirector sharedDirector]viewSize].height];
                     flashView.position = ccp(0,0);
                     [self addChild:flashView];
@@ -548,7 +562,7 @@
     [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-30)];
     [tutorialText setString:@"So, let's choose orange!"];
     tutorialText.visible = TRUE;
-    self.userInteractionEnabled = TRUE;
+    [self enableTouch];
 }
 
 -(void)textInvisible: (NSTimer*)timer{
@@ -557,6 +571,11 @@
 
 -(void)removeColorFlash{
     [self removeChild:flashView];
+    [self enableTouch];
+}
+
+-(void)enableTouch{
+    self.userInteractionEnabled = TRUE;
 }
 
 @end

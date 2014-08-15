@@ -384,8 +384,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.088908448815345764</real>
-							<real>0.90937501192092896</real>
+							<real>0.08714788407087326</real>
+							<real>0.86874997615814209</real>
 							<integer>0</integer>
 							<integer>2</integer>
 							<integer>2</integer>
@@ -433,8 +433,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>40</real>
-							<real>40</real>
+							<real>75</real>
+							<real>75</real>
 							<integer>0</integer>
 							<integer>0</integer>
 						</array>
@@ -467,7 +467,7 @@
 						<string>String</string>
 						<key>value</key>
 						<array>
-							<string>Back</string>
+							<string></string>
 							<false/>
 						</array>
 					</dict>
@@ -479,7 +479,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/ColorSelector.png</string>
+							<string>Images/back_button.PNG</string>
 						</array>
 					</dict>
 					<dict>
@@ -489,9 +489,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.12164140492677689</real>
-							<real>0.59121167659759521</real>
+							<real>0.94003647565841675</real>
 							<real>1</real>
+							<real>0.99704265594482422</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -503,7 +503,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/ColorSelectorHighlighter.png</string>
+							<string>Images/back_button.PNG</string>
 						</array>
 					</dict>
 					<dict>
@@ -513,9 +513,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.149550661444664</real>
-							<real>0.23842731118202209</real>
-							<real>0.94696575403213501</real>
+							<real>0.89725410938262939</real>
+							<real>0.92631614208221436</real>
+							<real>0.90456575155258179</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -736,8 +736,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.90669012069702148</real>
-							<real>0.90625</real>
+							<real>0.91300010681152344</real>
+							<real>0.86874997615814209</real>
 							<integer>0</integer>
 							<integer>2</integer>
 							<integer>2</integer>
@@ -785,8 +785,8 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>40</real>
-							<real>40</real>
+							<real>75</real>
+							<real>75</real>
 							<integer>0</integer>
 							<integer>0</integer>
 						</array>
@@ -819,7 +819,7 @@
 						<string>String</string>
 						<key>value</key>
 						<array>
-							<string>Retry</string>
+							<string></string>
 							<false/>
 						</array>
 					</dict>
@@ -831,7 +831,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/ColorSelector.png</string>
+							<string>Images/retry_button.PNG</string>
 						</array>
 					</dict>
 					<dict>
@@ -841,9 +841,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.21491102874279022</real>
-							<real>0.54373008012771606</real>
+							<real>0.9774545431137085</real>
 							<real>1</real>
+							<real>0.99703460931777954</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -855,7 +855,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/ColorSelectorHighlighter.png</string>
+							<string>Images/retry_button.PNG</string>
 						</array>
 					</dict>
 					<dict>
@@ -865,9 +865,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<real>0.15113595128059387</real>
-							<real>0.25096476078033447</real>
-							<real>0.94291365146636963</real>
+							<real>0.92326289415359497</real>
+							<real>0.9295194149017334</real>
+							<real>0.95532935857772827</real>
 							<real>1</real>
 						</array>
 					</dict>
@@ -1055,8 +1055,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
@@ -1202,7 +1200,7 @@
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
-			<real>128</real>
+			<real>294.79495239257812</real>
 			<key>sequenceId</key>
 			<integer>0</integer>
 			<key>soundChannel</key>

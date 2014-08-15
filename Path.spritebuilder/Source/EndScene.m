@@ -60,6 +60,7 @@
     CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
     [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:1]];
     [homeButton removeFromSuperview];
+    [learnMoreButton removeFromSuperview];
 }
 
 -(void)learnMore{

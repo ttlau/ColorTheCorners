@@ -3,7 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>filenames</key>
-	<dict/>
+	<dict>
+		<key>Images/back_button.PNG</key>
+		<string>Images/back_button.png</string>
+		<key>Images/retry_button.PNG</key>
+		<string>Images/retry_button.png</string>
+	</dict>
 	<key>metadata</key>
 	<dict>
 		<key>version</key>
