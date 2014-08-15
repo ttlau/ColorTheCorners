@@ -42,7 +42,7 @@
     homeButton.shadowColor = [UIColor ht_citrusColor];
     [homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     
-    CGRect frame3 = IS_PAD?CGRectMake(512-135, 384, 300, 110):CGRectMake([thisDirector viewSize].width/2 - 50, [thisDirector viewSize].height/2 + 5, 112.5, 55);
+    CGRect frame3 = IS_PAD?CGRectMake(512-135, 384, 300, 110):CGRectMake([thisDirector viewSize].width/2 - 68, [thisDirector viewSize].height/2 + 5, 150, 55);
     learnMoreButton = [[HTPressableButton alloc] initWithFrame:frame3 buttonStyle:HTPressableButtonStyleRounded];
     [learnMoreButton setTitle:@"Learn More" forState:UIControlStateNormal];
     learnMoreButton.buttonColor = [UIColor ht_sunflowerColor];
