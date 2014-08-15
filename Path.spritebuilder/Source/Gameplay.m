@@ -63,6 +63,11 @@
     if (userLevel == 1){
         [self presentWelcome];
     }
+    
+    // access audio object
+    OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+    // play background sound
+    [audio playEffect:@"BackgroundMusic.mp3" loop:TRUE];
 
 }
 
@@ -433,12 +438,14 @@
             [[NSUserDefaults standardUserDefaults] setObject:[[NSNumber alloc]initWithInt:userLevel] forKey:@"userLevel"];
             CCScene *mainScene = [CCBReader loadAsScene:@"SuccessScene"];
             [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1]];
+            [self stopMusic];
         }
         
         // else load the end scene
         else{
             CCScene *mainScene = [CCBReader loadAsScene:@"EndScene"];
             [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1]];
+            [self stopMusic];
         }
     }
 }
@@ -446,9 +453,15 @@
 - (void)back {
     CCScene *mainScene = [CCBReader loadAsScene:@"MainScene"];
     [[CCDirector sharedDirector] replaceScene:mainScene withTransition: [CCTransition transitionPushWithDirection:CCTransitionDirectionDown duration:1]];
+    [self stopMusic];
 }
 
 #pragma mark helper functions
+
+-(void)stopMusic{
+    OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+    [audio stopAllEffects];
+}
 
 // distance formula for use in drawing lines
 -(double)distanceBetweenPoint: (CGPoint) point1 andPoint: (CGPoint) point2

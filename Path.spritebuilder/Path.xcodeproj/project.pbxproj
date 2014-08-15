@@ -29,6 +29,7 @@
 		8F100890199D734100F6C24B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F100886199D734100F6C24B /* Icon@2x.png */; };
 		8F100891199D734100F6C24B /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F100887199D734100F6C24B /* iTunesArtwork.png */; };
 		8F100892199D734100F6C24B /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F100888199D734100F6C24B /* iTunesArtwork@2x.png */; };
+		8F339AD4199EBA4A00C9D95D /* BackgroundMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8F339AD3199EBA4A00C9D95D /* BackgroundMusic.mp3 */; };
 		8FA760EC198FF48900817947 /* ColorSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA760EB198FF48900817947 /* ColorSelector.m */; };
 		8FA85A4619993D88003DC69E /* WelcomeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA85A4519993D88003DC69E /* WelcomeScene.m */; };
 		8FA85A4A19993E75003DC69E /* GoalScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA85A4919993E75003DC69E /* GoalScene.m */; };
@@ -122,6 +123,7 @@
 		8F100887199D734100F6C24B /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		8F100888199D734100F6C24B /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		8F100893199D984200F6C24B /* alegreya-sans-sc.thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "alegreya-sans-sc.thin.ttf"; sourceTree = "<group>"; };
+		8F339AD3199EBA4A00C9D95D /* BackgroundMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BackgroundMusic.mp3; sourceTree = "<group>"; };
 		8FA760EA198FF48900817947 /* ColorSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorSelector.h; path = Source/ColorSelector.h; sourceTree = "<group>"; };
 		8FA760EB198FF48900817947 /* ColorSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorSelector.m; path = Source/ColorSelector.m; sourceTree = "<group>"; };
 		8FA85A4419993D88003DC69E /* WelcomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeScene.h; path = Source/WelcomeScene.h; sourceTree = "<group>"; };
@@ -244,6 +246,14 @@
 			);
 			name = "iPhone 6 Icon Pack";
 			path = "Icons/iPhone 6 Icon Pack";
+			sourceTree = "<group>";
+		};
+		8F339AD2199EBA4A00C9D95D /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				8F339AD3199EBA4A00C9D95D /* BackgroundMusic.mp3 */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 		8FAEE427199145B2001105B8 /* HTPressableButton-master */ = {
@@ -395,6 +405,7 @@
 		B77F1B4617B978D7009739AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8F339AD2199EBA4A00C9D95D /* Audio */,
 				8F100893199D984200F6C24B /* alegreya-sans-sc.thin.ttf */,
 				B73789911807667A0076A88C /* Icons */,
 				B737893A180761570076A88C /* Published-iOS */,
@@ -517,6 +528,7 @@
 				B71F591A188484E7003F4D28 /* Settings@2x.png in Resources */,
 				B7378976180762440076A88C /* Default-Landscape~ipad.png in Resources */,
 				8F10088F199D734100F6C24B /* Icon.png in Resources */,
+				8F339AD4199EBA4A00C9D95D /* BackgroundMusic.mp3 in Resources */,
 				8F10088B199D734100F6C24B /* Icon-Small-50.png in Resources */,
 				B71F5915188484E7003F4D28 /* iPhone-old.png in Resources */,
 				8F10087A199D733B00F6C24B /* Icon-Small@2x.png in Resources */,
