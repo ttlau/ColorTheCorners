@@ -215,12 +215,12 @@
 #pragma mark buttons
     
     // initialize the back button
-    [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_aquaColor]] forState:CCControlStateNormal];
+    [backButton setBackgroundColor:[CCColor colorWithRed: .698 green:.412 blue: .561] forState:CCControlStateNormal];
     [backButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
     
     // initialize the back button
-    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_aquaColor]] forState:CCControlStateNormal];
-    [clearButton setBackgroundColor:[[CCColor alloc] initWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
+    [clearButton setBackgroundColor:[CCColor colorWithRed: 698 green:.412 blue: .561] forState:CCControlStateNormal];
+    [clearButton setBackgroundColor:[CCColor colorWithUIColor: [UIColor ht_mintColor]] forState:CCControlStateHighlighted];
 
 #pragma mark making the level pretty
     
