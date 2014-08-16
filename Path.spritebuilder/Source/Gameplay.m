@@ -271,10 +271,10 @@
                 if (userLevel == 1){
                     if ([self checkColorEquality:currentColor and:[CCColor colorWithUIColor: [UIColor ht_alizarinColor]]] && numVerticesColored == 0){
                     tutorialText.visible = FALSE;
-                        [tutorialText setString: @"Place it here!"];
+                        [tutorialText setString: @"Tap to place it here!"];
                     
                     
-                        tutorialText.position = ccp(((Vertex*)_listOfVertices[0]).positionInPoints.x + 77.5, ((Vertex*)_listOfVertices[0]).positionInPoints.y - 25);
+                        tutorialText.position = ccp(((Vertex*)_listOfVertices[0]).positionInPoints.x + 115, ((Vertex*)_listOfVertices[0]).positionInPoints.y - 25);
                         tutorialText.visible = TRUE;
                     
                         // pulse the correct vertex
@@ -419,6 +419,7 @@
 - (void)clear {
     // reload this level
     [[CCDirector sharedDirector] replaceScene: [CCBReader loadAsScene:@"Gameplay"]];
+    [self stopMusic];
 }
 
 -(void)submit{
@@ -567,7 +568,7 @@
 
 -(void)presentWelcome{
     
-    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by choosing the red dot!"] fontName: @"HelveticaNeue-Light" fontSize:25];
+    tutorialText = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"Start by tapping the red dot!"] fontName: @"HelveticaNeue-Light" fontSize:25];
     [tutorialText setPosition: ccp(colorBox.position.x, colorBox.position.y-30)];
     [self addChild:tutorialText];
 }
