@@ -4,8 +4,8 @@
 //
 //  Created by Tim Lau on 7/14/14.
 //  Copyright (c) 2014 Apportable. All rights reserved.
-// TODO: tutorials - bigger text, placement, call to action (now you finish!), the actual goal in the beginning, animations
-// ask - transparent flashing screen, and rounded buttons, and z order of vertices
+// TODO: tutorial - fix how I can put an orange on the first vertex even after the fact
+// 
 //
 
 #import "Gameplay.h"
