@@ -384,8 +384,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.085387326776981354</real>
-							<real>0.86874997615814209</real>
+							<real>0.08362676203250885</real>
+							<real>0.87187498807907104</real>
 							<integer>0</integer>
 							<integer>2</integer>
 							<integer>2</integer>
@@ -467,7 +467,7 @@
 						<string>String</string>
 						<key>value</key>
 						<array>
-							<string>Try this</string>
+							<string></string>
 							<false/>
 						</array>
 					</dict>
@@ -479,7 +479,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/Back@4x.png</string>
+							<string>Images/back.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -503,7 +503,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/back_button.png</string>
+							<string>Images/back.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -833,7 +833,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/retry_button.png</string>
+							<string>Images/retry.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -857,7 +857,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/retry_button.png</string>
+							<string>Images/retry.png</string>
 						</array>
 					</dict>
 					<dict>
