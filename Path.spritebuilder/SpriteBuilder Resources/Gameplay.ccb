@@ -384,7 +384,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>0.08714788407087326</real>
+							<real>0.085387326776981354</real>
 							<real>0.86874997615814209</real>
 							<integer>0</integer>
 							<integer>2</integer>
@@ -467,7 +467,7 @@
 						<string>String</string>
 						<key>value</key>
 						<array>
-							<string></string>
+							<string>Try this</string>
 							<false/>
 						</array>
 					</dict>
@@ -479,7 +479,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/back_button.png</string>
+							<string>Images/Back@4x.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -703,6 +703,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
