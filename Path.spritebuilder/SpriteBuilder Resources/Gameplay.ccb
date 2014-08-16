@@ -479,7 +479,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/back_button.PNG</string>
+							<string>Images/back_button.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -503,7 +503,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/back_button.PNG</string>
+							<string>Images/back_button.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -831,7 +831,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/retry_button.PNG</string>
+							<string>Images/retry_button.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -855,7 +855,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>Images/retry_button.PNG</string>
+							<string>Images/retry_button.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -1055,6 +1055,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
